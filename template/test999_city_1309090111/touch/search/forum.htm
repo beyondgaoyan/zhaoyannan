@@ -1,0 +1,115 @@
+<!--{subtemplate common/header}-->
+ 
+<div class="pt"><a href="forum.php">{echo m_lang('home')}</a> <em> &gt; </em> {echo m_lang('search')}</div>
+
+<div class="mmt">
+<a href="search.php?mod=forum" class="a" >{echo m_lang('mthread')}</a>    
+<a href="search.php?mod=portal" >{echo m_lang('arc')}</a>
+</div>
+
+<div class="ct">
+
+<div class="search_in">
+    <div class="search">
+    <form id="mod_thread" method="post" action="search.php">
+    <input type="hidden" id="mod_thread" name="mod" value="forum" checked="checked" />
+    <input type="hidden" value="yes" name="searchsubmit">
+    <input type="text" name="srchtxt" value="{echo m_lang('searchthread')}" onFocus="if(this.value == '{echo m_lang('searchthread')}') this.value = '';" onBlur="if(this.value == '') this.value = '{echo m_lang('searchthread')}';" class="sertxt">
+    <input type="submit" name="btnG" value="{echo m_lang('search')}" class="serbut" >
+    </form>
+    </div>
+    </div> 
+
+<!--{if CURMODULE == 'forum'}-->
+	<div class="mmt s_mmt">		
+		<a href="search.php?mod=forum&srchfrom=14400&searchsubmit=yes" class="lb">{echo m_lang('4hr')}</a>		
+		<a href="search.php?mod=forum&srchfrom=86400&searchsubmit=yes" class="nb">{echo m_lang('24hr')}</a>
+		<a href="search.php?mod=forum&srchfrom=604800&searchsubmit=yes" class="nb">{echo m_lang('168hr')}</a>
+		<a href="search.php?mod=forum&srchfrom=2592000&searchsubmit=yes" class="rb">{echo m_lang('720hr')}</a>
+	</div>
+<!--{/if}-->
+
+						<div class="search_hot{if $keyword} bb{/if}">
+                        <strong class="xw1">{lang hot_search}: </strong>                        
+                        <!--{if $_G['setting']['srchhotkeywords']}-->
+							<!--{loop $_G['setting']['srchhotkeywords'] $val}-->
+								<!--{if $val=trim($val)}-->
+									<!--{eval $valenc=rawurlencode($val);}-->
+									<!--{block srchhotkeywords[]}-->
+										<!--{if !empty($searchparams[url])}-->
+											<a href="$searchparams[url]?q=$valenc&source=hotsearch{$srchotquery}" target="_blank" class="xi2" sc="1">$val</a>
+										<!--{else}-->
+											<a href="search.php?mod=forum&srchtxt=$valenc&formhash={FORMHASH}&searchsubmit=true&source=hotsearch" target="_blank" class="xi2" sc="1">$val</a>
+										<!--{/if}-->
+									<!--{/block}-->
+								<!--{/if}-->
+							<!--{/loop}-->
+							<!--{echo implode('', $srchhotkeywords);}--> 
+                            <!--{else}--> 
+                            {echo m_lang('nosearch')}                           
+						<!--{/if}-->
+                        </div>
+                        
+                        
+<!--{if $keyword}--><div class="pt nobg"><div class="pth xi1">{lang search_result_keyword} <!--{if $modfid}--><a href="forum.php?mod=modcp&action=thread&fid=$modfid&keywords=$modkeyword&submit=true&do=search&page=$page" target="_blank">{lang goto_memcp}</a><!--{/if}--></div></div><!--{/if}-->
+	
+
+<!--{if !empty($searchid) && submitcheck('searchsubmit', 1)}-->
+
+<div id="alist" class="bm">
+	<!--{if empty($threadlist)}-->
+		<div class="wmt">{lang search_nomatch}</div>
+	<!--{else}-->
+			<!--{loop $threadlist $thread}-->
+				<div class="bm_c">
+				<a href="forum.php?mod=viewthread&tid=$thread[realtid]&highlight=$index[keywords]" class="xs1 xi2">$thread[subject]</a>
+                <p class="xg1 mtm"><!--{if !$thread['price'] && !$thread['readperm']}-->$thread[message]<!--{else}-->{lang thread_list_message1}<!--{/if}--></p>
+					<p class="xg1 mtn ptn bt">                    
+                    <a href="forum.php?mod=forumdisplay&fid=$thread[fid]">$thread[forumname]</a><span class="pipe">|</span><!--{if $thread['authorid'] && $thread['author']}--><a href="home.php?mod=space&uid=$thread[authorid]">$thread[author]</a><!--{else}--><!--{if $_G['forum']['ismoderator']}--><a href="home.php?mod=space&uid=$thread[authorid]">{lang anonymous}</a><!--{else}-->{lang anonymous}<!--{/if}--><!--{/if}--><span class="pipe">|</span>$thread[dateline]
+					</p>
+				</div>
+			<!--{/loop}-->
+	<!--{/if}-->
+    </div>
+    
+<!--{if !empty($multipage)}--> 
+<!--{if $pagestyle == 1}-->
+<script type="text/javascript">
+var page=$_G['page'];
+var allpage={echo $thispage = ceil($index['num'] / $_G['tpp']);};
+function ajaxpage(url){
+						$("ajaxld").style.display='block';
+						$("ajnt").style.display='none';
+						var x = new Ajax("HTML");
+						page++;
+						url=url+'&page='+page;
+						x.get(url, function (s) {
+							s = s.replace(/\\n|\\r/g, "");//alert(s);
+							s = s.substring(s.indexOf("<div id=\"alist\""), s.indexOf("<div id=\"ajaxshow\"></div>"));//alert(s);
+							$('ajaxshow').innerHTML+=s;
+							$("ajaxld").style.display='none';
+						if(page==allpage){
+							$("ajnt").style.display='none';
+						}else{
+							$("ajnt").style.display='block';
+						}
+						});
+
+						return false;
+}
+</script>
+<div id="ajaxshow"></div>
+<div class="a_pg" id="a_pg"> 
+<div id="ajaxld"><img src="./mplus/img/load.gif" /> {echo m_lang('load_pic')}</div>
+<div id="ajnt"><a href="search.php?mod=forum&searchid={$searchid}&orderby={$orderby}&ascdesc={$ascdesc}&searchsubmit=yes" onclick="return ajaxpage(this.href);">{echo m_lang('load')}</a></div>
+</div>
+<!--{else}-->
+<div class="pgbox">$multipage</div>
+<!--{/if}-->
+<!--{/if}-->
+
+<!--{/if}-->
+
+</div>
+
+<!--{subtemplate common/footer}-->

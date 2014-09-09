@@ -1,0 +1,214 @@
+{template aljbd:header_hao}
+<script src="source/plugin/aljbd/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var jq=jQuery.noConflict();
+</script>
+<link href="source/plugin/aljbd/css/common.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.dz_nvsec {
+  border-bottom: 2px solid #FF6600;
+  height: 40px;
+  margin: 10px 0;
+}
+.dz_nav {
+  float: left;
+  height: 40px;
+  line-height: 40px;
+}
+.dz_nav a {
+  float: left;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 20px;
+  color:#666666;
+}
+.dz_nav a.a {
+  background: none repeat scroll 0 0 #FF6600;
+  color: #FFFFFF;
+}
+.dz_nav a:hover {
+  background: none repeat scroll 0 0 #FF6600;
+  color:#FFFFFF;
+  text-decoration: none;
+}
+.fr {
+  display: inline;
+  float: right !important;
+}
+.descxxx {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: block;
+  font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -20px;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.descxxx{
+  color: #FFFFFF;
+}
+.profile a{
+color: #105CB6;
+    text-decoration: none;
+}
+.profile a:hover{
+color: #105CB6;
+    text-decoration: underline;
+}
+</style>
+<div class="wrap cl">
+<div class="main_lj">
+
+<div id="pt"> <a href="./" id="fjump" class="nvvv" title="{$_G['setting']['bbname']}">{$_G['setting']['bbname']}</a><em>&rsaquo;</em><a href="{if $config['isrewrite']}brand.html{else}plugin.php?id=aljbd{/if}">商情</a>
+
+
+</div>
+<div class="selection mbm">
+<div class="search">
+<div class="y">
+<form method="post" action="plugin.php?id=aljbd&act=shanglist">
+<input class="px" type="text" name="keyword" id="keyword" maxlength=50 value="" />
+<button type="submit">搜索</button>
+</form>
+</div>
+<div class="z">共搜索到 <strong>$num</strong> 商情</div>
+</div>
+<dl class="cl">
+<dt>选择分类</dt>
+{if $_GET['type']}
+{eval $check=C::t('#aljbd#aljbd_type')->fetch_all_by_upid($_GET['type']);}
+{/if}
+
+<dd class="cl">
+<ul>
+<li><a {if empty($_GET['type'])}class="a"{/if} href="plugin.php?id=aljbd&act=shanglist">全部</a></li>
+{loop $tlist $t}
+<li>
+<a {if $t['id']==$_GET['type']}class="a"{/if} href="{if $config['isrewrite']}brand_{$t['id']}_{eval echo intval($_GET['subtype'])}_{eval echo intval($_GET['region'])}_{eval echo intval($_GET['subregion'])}_{if $_GET['order']=='dateline'}2{elseif $_GET['order']=='view'}1{else}{eval echo intval($_GET['order'])}{/if}_{if $_GET['view']=='pic'}3{elseif $_GET['view']=='list'}4{else}{eval echo intval($_GET['view'])}{/if}.html{else}plugin.php?id=aljbd&act=shanglist&type={$t['id']}&subtype={$_GET['subtype']}&region={$_GET['region']}&subregion={$_GET['subregion']}{/if}">
+$t['subject']({if $tcs[$t['id']]}$tcs[$t['id']]{else}0{/if})</a>
+</li>
+{/loop}
+</ul>
+</dd>
+
+</dl>
+
+</div><div class="bm mbm">
+
+<div class="bm_h">
+<ul class="filter cl">
+<li class="order y">
+<a href="plugin.php?id=aljbd&act=shanglist" style="border-right:0;">默认</a>
+<a href="plugin.php?id=aljbd&act=shanglist&order=view" style="border-right:0;">浏览量</a>
+<a href="plugin.php?id=aljbd&act=shanglist&order=1" style="border-right:0;">今天</a>
+<a href="plugin.php?id=aljbd&act=shanglist&order=3" style="border-right:0;">三天内</a>
+<a href="plugin.php?id=aljbd&act=shanglist&order=7" style="border-right:0;">一周内</a>
+</li>
+</ul>
+</div>
+
+<div class="cl">
+
+<ul class="viewlist cl">
+
+{loop $bdlist $bd}
+{eval $avg=C::t('#aljbd#aljbd')->fetch_by_id($bd['bid'],10);}
+{eval $xianshi=C::t('#aljbd#aljbd_type_notice')->fetch_all_by_type($bd['type']);}
+    <li class="notice">
+	<div class="thumb">
+<a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$avg[0]['id']}"><img src="$avg[0]['logo']"></a>
+<p class="name"><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$avg[0]['id']}">$avg[0]['name']</a></p>
+</div>
+<div class="info">
+<h3 class="xi2"><a target="_blank" href="/plugin.php?id=aljbd&act=noticeview&bid={$bd['bid']}&nid={$bd['id']}" title="$bd['subject']"><font color="black" >[<b>$xianshi[0]['subject']</b>]</font> <b>$bd['subject']</b></a></h3>
+<p><font color="#999">发布日期： </font>{eval echo gmdate('Y-m-d H:i:s',$bd['dateline']+8*3600);} &nbsp;&nbsp<font color="#999">浏览次数： </font>{$bd['view']}</p>
+<p class="xg1">{eval echo substr(strip_tags(preg_replace("/<img.*?>/si","",$bd['content'])),0,170);}</p>
+</div><div class="goodthumb">
+<span class="s2 xg1"><img style="width: 100px; height: 100px;" src="$bd['pic']" alt=""></span>
+</div></li>
+{/loop}
+</ul>
+
+<div class="mtm cl">
+$paging</div>
+</div>
+</div></div>
+<div class="side">
+<div class="mbm cl" id="button">
+<a href="plugin.php?id=aljbd&act=attend" class="btn" style="float:left;">品牌入驻</a><a href="plugin.php?id=aljbd&act=member" onclick="showDialog('您还没有入驻哦，先申请吧！');return false;" class="btn btnr">店铺管理</a></div>
+<div class="cl hotvip">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2>
+</div>
+
+<ul>
+{eval $i=1;}
+{loop $recommendlist $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}
+</ul>
+</div>
+<!--{if file_exists('source/plugin/aljbd/com/good.php')}
+<div class="cl hotvip2">
+<div class="sidetitle cl">
+<h2 class="z">{lang aljbd:list_goods_6}</h2>
+<h2><a class="more y" href="{if $config['isrewrite']}goods.html{else}plugin.php?id=aljbd&act=goods{/if}">{lang aljbd:list_goods_7}</a></h2>
+</div>
+
+<ul>
+{eval $i=1;}
+{loop $recommendlist_goods $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_good_{$recommend['bid']}_{$recommend[id]}.html{else}plugin.php?id=aljbd&act=goodview&bid={$recommend['bid']}&gid={$recommend[id]}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['pic1']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}
+</ul>
+</div>
+{/if}
+{if file_exists('source/plugin/aljbd/com/notice.php')}
+<div class="wgt" id="notice_list" style="margin-bottom:10px;">
+<div class="title cl" style="padding-top:0px;">
+<h2 class="z">{lang aljbd:list_goods_8}</h2>
+
+</div>
+<ul>
+{loop $notice $n}
+<li><a title="$n['subject']" style="" href="{if $config['isrewrite']}brand_notice_{$n['bid']}_{$n[id]}.html{else}plugin.php?id=aljbd&act=noticeview&bid={$n['bid']}&nid=$n['id']{/if}" target="_blank">{eval echo mb_substr($n['subject'],0,20,$_G['charset']);}</a></li>
+{/loop}
+</ul>
+</div>
+{/if}
+$config['ad']
+</div>-->
+<script src="source/plugin/aljbd/js/simpleslide.js" type="text/javascript" charset="utf-8"></script>
+<script>
+jq(function(){
+jq('.hotvip li').mouseover(function(){
+jq(this).addClass('active').siblings().removeClass('active');
+});
+jq('.hotvip:eq(0) ul').simpleSlideClass({intervalTime: 2});
+});
+jq(function(){
+jq('.hotvip2 li').mouseover(function(){
+jq(this).addClass('active').siblings().removeClass('active');
+});
+jq('.hotvip2:eq(0) ul').simpleSlideClass({intervalTime: 2});
+})
+
+</script>
+
+</div>
+
+{template common/footer}

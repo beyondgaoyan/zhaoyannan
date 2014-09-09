@@ -1,0 +1,113 @@
+<!--{subtemplate common/header}-->
+<div class="ct">
+<div class="pt"><a href="forum.php">{echo m_lang('home')}</a> <em> &gt; </em> <a href="forum.php?mod=guide&view=index">{echo m_lang('guide')}</a></div>
+<div class="mmt mmt_gd">				
+	<a href="forum.php?mod=guide&view={if $_G['setting']['version'] == 'X3'}newthread{else}index{/if}" class="lb{if $view == 'index' || $view == 'newthread'} a{/if}"><!--{if $_G['setting']['version'] == 'X3'}-->{lang guide_newthread}<!--{else}-->{lang guide_new}<!--{/if}--></a>				
+	<a href="forum.php?mod=guide&view=hot" class="nb{if $view == 'hot'} a{/if}">{lang guide_hot}</a>
+	<a href="forum.php?mod=guide&view=digest" class="rb{if $view == 'digest'} a{/if}">{lang guide_digest}</a>
+</div>
+
+<!--{if $_G['setting']['version'] != 'X2'}-->
+
+			<!--{if $view == 'index'}-->
+                                    
+				<!--{loop $data $key $list}-->
+					 	<ul class="thlist thlist_gd">                      
+					 		<!--{if $list['threadcount']}-->					 			
+					 			<!--{loop $list['threadlist'] $thread}-->
+					 			<!--{if $key == 'new'}-->
+					 			<li>
+						 		<a href="forum.php?mod=viewthread&tid=$thread[tid]&{if $_GET['archiveid']}archiveid={$_GET['archiveid']}&{/if}extra=$extra" class="guide">
+                                <span class="rep">{$thread[replies]}</span>
+                                <h1>$thread[subject]</h1>
+                                <p>$list['forumnames'][$thread[fid]]['name']<span class="pipe">-</span><!--{if $thread['authorid'] && $thread['author']}-->$thread[author]<!--{else}-->$_G[setting][anonymoustext]<!--{/if}--><span class="pipe">-</span>$thread['lastpost']</p>                                
+                                </a>
+					 			</li>
+                                <!--{/if}-->
+					 			<!--{/loop}-->
+					 		<!--{else}-->
+                            <!--{if $key == 'new'}-->
+                            <li class="wmt">{lang guide_nothreads}</li>	
+                            <!--{/if}-->  				 		
+					 		<!--{/if}-->                            
+					 	</ul>
+				<!--{/loop}-->
+               
+            <!--{elseif $view == 'hot'}-->
+            
+				<!--{loop $data $key $list}-->
+					 	<ul class="thlist thlist_gd">                      
+					 		<!--{if $list['threadcount']}-->					 			
+					 			<!--{loop $list['threadlist'] $thread}-->
+					 			<!--{if $key == 'hot'}-->
+					 			<li>
+						 		<a href="forum.php?mod=viewthread&tid=$thread[tid]&{if $_GET['archiveid']}archiveid={$_GET['archiveid']}&{/if}extra=$extra" class="guide">
+                                <span class="rep">{$thread[replies]}</span>
+                                <h1>$thread[subject]</h1>
+                                <p>$list['forumnames'][$thread[fid]]['name']<span class="pipe">-</span><!--{if $thread['authorid'] && $thread['author']}-->$thread[author]<!--{else}-->$_G[setting][anonymoustext]<!--{/if}--><span class="pipe">-</span>$thread['lastpost']</p>                                
+                                </a>
+					 			</li>
+                                <!--{/if}-->
+					 			<!--{/loop}-->
+					 		<!--{else}-->
+                            <li class="wmt">{lang guide_nothreads}</li>					 		
+					 		<!--{/if}-->                            
+					 	</ul>
+				<!--{/loop}-->				
+                
+            <!--{elseif $view == 'digest'}-->
+            
+				<!--{loop $data $key $list}-->
+					 	<ul class="thlist thlist_gd">                      
+					 		<!--{if $list['threadcount']}-->					 			
+					 			<!--{loop $list['threadlist'] $thread}-->
+					 			<!--{if $key == 'digest'}-->
+					 			<li>
+						 		<a href="forum.php?mod=viewthread&tid=$thread[tid]&{if $_GET['archiveid']}archiveid={$_GET['archiveid']}&{/if}extra=$extra" class="guide">
+                                <span class="rep">{$thread[replies]}</span>
+                                <h1>$thread[subject]</h1>
+                                <p>$list['forumnames'][$thread[fid]]['name']<span class="pipe">-</span><!--{if $thread['authorid'] && $thread['author']}-->$thread[author]<!--{else}-->$_G[setting][anonymoustext]<!--{/if}--><span class="pipe">-</span>$thread['lastpost']</p>                                
+                                </a>
+					 			</li>
+                                <!--{/if}-->
+					 			<!--{/loop}-->
+					 		<!--{else}-->
+                            <li class="wmt">{lang guide_nothreads}</li>					 		
+					 		<!--{/if}-->                            
+					 	</ul>
+				<!--{/loop}-->
+                
+                <!--{elseif $view == 'newthread'}-->                
+                
+            <!--{if $_G['setting']['version'] == 'X3'}-->            
+				<!--{loop $data $key $list}-->
+					 	<ul class="thlist thlist_gd">                      
+					 		<!--{if $list['threadcount']}-->					 			
+					 			<!--{loop $list['threadlist'] $thread}-->
+					 			<!--{if $key == 'newthread'}-->
+					 			<li>
+						 		<a href="forum.php?mod=viewthread&tid=$thread[tid]&{if $_GET['archiveid']}archiveid={$_GET['archiveid']}&{/if}extra=$extra" class="guide">
+                                <span class="rep">{$thread[replies]}</span>
+                                <h1>$thread[subject]</h1>
+                                <p>$list['forumnames'][$thread[fid]]['name']<span class="pipe">-</span><!--{if $thread['authorid'] && $thread['author']}-->$thread[author]<!--{else}-->$_G[setting][anonymoustext]<!--{/if}--><span class="pipe">-</span>$thread['lastpost']</p>                                
+                                </a>
+					 			</li>
+                                <!--{/if}-->
+					 			<!--{/loop}-->
+					 		<!--{else}-->
+                            <!--{if $key == 'newthread'}-->
+                            <li class="wmt">{lang guide_nothreads}</li>	
+                            <!--{/if}-->  				 		
+					 		<!--{/if}-->                            
+					 	</ul>
+				<!--{/loop}-->            
+             <!--{/if}-->                
+                				
+			<!--{/if}-->
+                        
+            <!--{else}-->
+            {echo m_lang('nodx25')}
+            <!--{/if}-->
+            
+      </div>
+<!--{subtemplate common/footer}-->

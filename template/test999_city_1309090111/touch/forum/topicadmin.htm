@@ -1,0 +1,63 @@
+<!--{subtemplate common/header}-->
+<div class="ct">
+<div class="pt bb"><a href="javascript:history.back();" onclick="javascript:history.back();" >{lang back}</a> <em> &gt; </em> {echo m_lang('mods')}</div>
+
+<div class="ipc">
+<!--{if ($_GET['optgroup'] == 3 && $operation == 'delete') || ($_GET['optgroup'] == 4 && $operation == '')}-->
+    <form id="moderateform" method="post" autocomplete="off" action="forum.php?mod=topicadmin&action=moderate&optgroup=$optgroup&modsubmit=yes" >
+        <input type="hidden" name="frommodcp" value="$frommodcp" />
+        <input type="hidden" name="formhash" value="{FORMHASH}" />
+        <input type="hidden" name="fid" value="$_G[fid]" />
+        <input type="hidden" name="redirect" value="{echo dreferer()}" />
+        <input type="hidden" name="reason" value="{lang topicadmin_mobile_mod}" />
+        <!--{loop $threadlist $thread}-->
+            <input type="hidden" name="moderate[]" value="$thread[tid]" />
+        <!--{/loop}-->
+        <!--{if $_GET['optgroup'] == 3}-->
+            <!--{if $operation == 'delete'}-->
+                <div class="box pbm mbm inbox">
+                <!--{if $_G['group']['allowdelpost']}-->
+                    <input name="operations[]" type="hidden" value="delete"/>
+                    <!--{loop $threadlist $thread}-->
+                    <div class="ipcl xg1">$thread['subject']</div>
+                    <!--{/loop}-->
+                    <div class="ipcl xg1">{lang admin_delthread_confirm}</div>
+                    <div class="inbox mtm ptb">
+                    <input type="button" onclick="javascript:history.back();return false;" value="{lang back}" class="ibt" /> 
+                    <input type="submit" name="modsubmit" id="modsubmit"  value="{lang confirms}" class="ibt" />
+                    </div>
+                <!--{else}-->
+                    <div class="ipcl mbm mtm">{lang admin_delthread_nopermission}</div>
+                <!--{/if}-->
+                </div>
+            <!--{/if}-->
+        <!--{elseif $_GET['optgroup'] == 4}-->
+            <div class="box pbm mbm inbox">
+                <!--{loop $threadlist $thread}-->
+                <div class="ipcl xg1">$thread['subject']</div>
+                <!--{/loop}-->
+                
+                <div class="ipcl xg1">
+                <label><input type="radio" name="operations[]" class="pr" value="open" $closecheck[0] /> {lang admin_open}</label>              
+                <label><input type="radio" name="operations[]" class="pr" value="close" $closecheck[1] /> {lang admin_close}</label>
+                </div>
+                
+                <div class="ipcl xg1">{lang expire}:<span class="y">({echo m_lang('cldate')})</span></div>
+                <p><input type="text" name="expirationclose" id="expirationclose" autocomplete="off" value="$expirationclose" style=" width:100%;"/></p>
+                
+                <div class="inbox mtm ptb">
+                <input type="button" onclick="javascript:history.back();return false;" value="{lang back}" class="ibt" /> 
+                <input type="submit" name="modsubmit" id="modsubmit"  value="{lang confirms}" class="ibt" />
+                </div>
+            </div>
+        <!--{/if}-->
+    </form>
+<!--{else}-->
+	<div class="box pbm mbm inbox">
+    	<div class="ipcl xg1">{lang admin_threadtopicadmin_error}</div>
+    	<div class="inbox mtm"><input type="button" onclick="javascript:history.back();return false;" value="{lang back}" class="ibt" /></div>
+    </box>
+<!--{/if}-->
+</div>
+</div>
+<!--{subtemplate common/footer}-->

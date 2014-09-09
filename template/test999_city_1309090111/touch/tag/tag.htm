@@ -1,0 +1,29 @@
+<!--{template common/header}-->
+<!--{if $type != 'countitem'}-->
+
+<div class="ct">
+  <div class="pt"> <a href="forum.php?mod=forum">{echo m_lang('forum')}</a> <em> &gt; </em> <a href="misc.php?mod=tag">{lang tag}</a> </div>
+  <div class="bm">
+    <div class="bm_c{if $tagarray}{else} nobb{/if}">
+      <form method="post" action="misc.php?mod=tag" class="pns">
+        <input type="text" name="name" style=" line-height:26px; height:28px; padding:0px 4px;" size="30" />
+        &nbsp;
+        <button type="submit" style=" height:30px; padding:0px;" ><em>{lang search}</em></button>
+      </form>
+      <!--{if $tagarray}-->
+      <div class="taglist"> 
+        <!--{loop $tagarray $tag}--> 
+        <a href="misc.php?mod=tag&id=$tag[tagid]" >$tag[tagname]</a> 
+        <!--{/loop}--> 
+      </div>
+      <!--{else}--><!--{/if}--> 
+    </div>
+  </div>
+  <!--{if $tagarray}--><!--{else}-->
+  <div class="wmt notb">{lang no_tag}</div>
+  <!--{/if}--> 
+</div>
+<!--{else}--> 
+$num 
+<!--{/if}--> 
+<!--{template common/footer}-->

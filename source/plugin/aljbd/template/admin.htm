@@ -1,0 +1,43 @@
+<script src="http://api.map.baidu.com/api?v=1.3" type="text/javascript" charset="utf-8"></script>
+<script src="source/plugin/aljbd/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var jq=jQuery.noConflict();
+</script>
+<script>disallowfloat = 'newthread';</script>
+<form id="cpform" action="admin.php?action=plugins&operation=config&identifier=aljbd&pmod=admin&act=$_GET['act']" autocomplete="off" method="post" name="cpform">
+<input type="hidden" value="{FORMHASH}" name="formhash">
+<table class="tb tb2 nobdb">
+<tbody>{template aljbd:shopnav}
+<tr class="header"><th></th><th >排序</th><th>店主</th><th>店名</th><th>分类</th><th>地区</th><th>申请时间</th><th>操作</th></tr>{loop $bdlist $bd}
+<tr class="header"><td><input type="checkbox" value="{$bd['id']}" name="delete[]" class="checkbox">{$bd['id']}</td>
+<td>{if $_GET['act']!='yes'}$bd['displayorder']{else}<input name="displayorder[{$bd['id']}]" type="text" value="$bd['displayorder']" style="width:30px;">{/if}</td>
+<td>{$bd['username']}</td><td>{$bd['name']}</td><td>{$typelist[$bd['type']]['subject']}</td><td>{$rlist[$bd['region']]['name']}</td><td>{eval echo gmdate('Y-m-d H:i:s',$bd['dateline']+8*3600);}</td><td>{if $_GET['act']=='yes'&&empty($bd['renzheng'])}
+<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=renzheng&bid={$bd['id']}">认证</a>
+&nbsp;{elseif $_GET['act']=='yes'&&$bd['renzheng']}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=unrenzheng&bid={$bd['id']}">
+<font color="red">取消认证</font></a>&nbsp;{/if}{if $_GET['act']=='yes'&&empty($bd['shout'])}
+<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=shout&bid={$bd['id']}">首页左推</a>
+&nbsp;{elseif $_GET['act']=='yes'&&$bd['shout']}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=unshout&bid={$bd['id']}">
+<font color="red">删除左推</font></a>&nbsp;{/if}{if $_GET['act']=='yes'&&empty($bd['yshout'])}
+<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=yshout&bid={$bd['id']}">首页右推</a>
+&nbsp;{elseif $_GET['act']=='yes'&&$bd['yshout']}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=unyshout&bid={$bd['id']}">
+<font color="red">删除右推</font></a>&nbsp;{/if}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=edit&bid={$bd['id']}">{lang aljbd:s110}<a>&nbsp;{if $_GET['act']=='yes'&&empty($bd['recommend'])}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=recommend&bid={$bd['id']}">{lang aljbd:s193}</a>&nbsp;{elseif $_GET['act']=='yes'&&$bd['recommend']}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=unrecommend&bid={$bd['id']}"><font color="red">{lang aljbd:s194}</font></a>&nbsp;{/if}{if $_GET['act']!='yes'}<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=pass&bid={$bd['id']}">{lang aljbd:s195}</a>{else}&nbsp;<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=refuse&bid={$bd['id']}">{lang aljbd:s196}</a>&nbsp;{/if}
+{if file_exists('source/plugin/aljbd/template/com/commentlist.htm')}
+&nbsp;<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=commentlist&bid={$bd['id']}" onclick="showWindow('edit',this.href)">{lang aljbd:s197}</a>
+{/if}
+&nbsp;<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=adv&bid={$bd['id']}" onclick="showWindow('edit',this.href)">{lang aljbd:s198}</a>
+{if file_exists('source/plugin/aljbd/com/gg.php')}
+&nbsp;<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=gg&bid={$bd['id']}" onclick="showWindow('edit',this.href)">{lang aljbd:s199}</a>
+{/if}
+{if file_exists('source/plugin/aljbd/com/mark.php')}
+&nbsp;<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=mark&bid={$bd['id']}" onclick="showWindow('edit',this.href)"><font color="red">{lang aljbd:s200}</font></a>&nbsp;
+{/if}
+{if file_exists('source/plugin/aljbd/template/com/iwantclaim.htm')}
+<a href="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=iwantclaim&bid={$bd['id']}" onclick="showWindow('edit',this.href)"><font style="color:green">{lang aljbd:s245}</font></a>
+{/if}
+<a href="#"  onclick="showDialog('{lang aljbd:s249}','confirm','',function(){location.href='admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=admin&act=delete&bid={$bd['id']}'},0);return false;">{lang aljbd:s7}</a>
+<a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank">{lang aljbd:s87}</a>
+</td></tr>
+{/loop}
+<tr><td colspan="3"><div class="fixsel"><input type="checkbox" onclick="checkAll('prefix', this.form, 'delete','chkallUMP3')" class="checkbox" id="chkallUMP3" name="chkall"><label for="chkallUMP3">{if $_GET['act']!='yes'}删/审？/{/if}{lang aljbd:adminalbumall_2}</label>&nbsp;{if $_GET['act']!='yes'}<input type="submit" value="批量审核"  name="sh_submit" id="sh_submit" class="btn">&nbsp;<input type="submit" value="批量删除"  name="del_submit" id="del_submit" class="btn">{else}<input type="submit" value="{lang aljbd:adminalbumall_3}" title="{lang aljbd:adminalbumall_4}" name="submit" id="submit_submit" class="btn">{/if}</div></td><td>$paging</td></tr>
+</tbody></table>
+</form>

@@ -1,0 +1,14 @@
+<div class="box pbm mbm inbox">
+	<div class="ipcl xg1">{lang panel_login}</div>
+	<div class="ipcl xg1">{lang panel_notice_login}</div>
+	<form method="post" autocomplete="off" action="{$cpscript}?mod=modcp&action=login" class="exfm">
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+		<input type="hidden" name="fid" value="{$_G[fid]}" />
+        <input type="hidden" name="uid" value="{$_GET[uid]}" />
+		<input type="hidden" name="submit" value="yes" />
+		<input type="hidden" name="login_panel" value="yes" />
+		<div class="ipcl xg1">{lang panel_login_username}: <strong>{$_G[member][username]}</strong></div>
+        <p><span>{lang panel_login_password}</span><input type="password" name="cppwd" id="cppwd" /></p>
+        <div class="inbox"><input type="submit" name="submit" id="submit"  value="{lang submit}" class="ibt" /></div>
+	</form>
+</div>

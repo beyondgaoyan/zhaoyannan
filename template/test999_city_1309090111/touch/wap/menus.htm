@@ -1,0 +1,16 @@
+<ul>
+<!--{if $ctstyle == 1}-->
+<li><a href="forum.php">{echo m_lang('home')}</a></li>
+<li><a href="forum.php?mod=forum">{echo m_lang('forum')}</a></li>
+<!--{else}-->
+<li><a href="forum.php">{echo m_lang('home')}</a></li>
+<!--{/if}-->
+<!--{if $picstyle == 1}-->
+<li><a href="forum.php?mod=pic">{echo m_lang('pic')}</a></li>
+<!--{/if}-->
+<!--{if $_G['setting']['version'] != 'X2'}-->
+<!--{if helper_access::check_module('guide')}--><li><a href="forum.php?mod=guide">{echo m_lang('guide')}</a></li><!--{/if}-->
+<!--{if helper_access::check_module('follow')}--><li><a href="home.php?mod=follow">{echo m_lang('mfollow')}</a></li><!--{/if}--> 
+<!--{/if}-->
+<!--{$menus}-->
+</ul>

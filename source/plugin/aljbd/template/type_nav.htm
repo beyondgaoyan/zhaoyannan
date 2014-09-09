@@ -1,0 +1,14 @@
+<div class="itemtitle">
+	<h3>
+		
+	</h3>
+	<ul class="tab1">
+		<li <!--{if !$_GET['lj']}-->class="current"<!--{/if}-->><a href="admin.php?action=plugins&operation=config&identifier=$pluginid&pmod=brandtype"><span>店铺</span></a></li>
+		{if file_exists('source/plugin/aljbd/com/good.php')}
+		<li <!--{if $_GET['lj']=='goodstype'}-->class="current"<!--{/if}-->><a href="admin.php?action=plugins&operation=config&do=39&identifier=$pluginid&pmod=brandtype&lj=goodstype"><span>商品</a></li>
+		{/if}
+		<li <!--{if $_GET['lj']=='shangtype'}-->class="current"<!--{/if}-->><a href="admin.php?action=plugins&operation=config&do=39&identifier=$pluginid&pmod=brandtype&lj=shangtype"><span>商情</span></a></li>
+		<li <!--{if $_GET['lj']=='quantype'}-->class="current"<!--{/if}-->><a href="admin.php?action=plugins&operation=config&do=39&identifier=$pluginid&pmod=brandtype&lj=quantype"><span>优惠券</span></a></li>		
+	</ul>
+	
+</div>

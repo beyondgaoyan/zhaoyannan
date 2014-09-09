@@ -1,0 +1,410 @@
+<!--{eval require DISCUZ_ROOT.'./'.$mobilestyle.'/mobile/v2_mobile/mobilelist.php'; }-->
+
+
+<!--////////////////////////// 热点 //////////////////////////-->
+<div class="v2-pl">
+
+<!--{eval $list=forumpost(2,3,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<!--{if $i == 1}--> 
+<h1><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],20)}</a></h1>
+<!--{elseif $i == 2}-->
+<div class="v2-up">
+<a href="forum.php?mod=viewthread&tid=$o[tid]">[ {echo cutstr($o[subject],15)} ]</a>&nbsp;&nbsp;
+<!--{elseif $i == 3}-->
+<a href="forum.php?mod=viewthread&tid=$o[tid]">[ {echo cutstr($o[subject],15)} ]</a>
+</div>
+<!--{/if}-->
+{eval $i++;}
+<!--{/loop}-->
+
+<div class="v2-showpic" id="slider3">  
+<ul>
+<!--{eval $list=forumpost(2,4,'lastpost',0,0,0,30)}-->  
+{eval $i=1;}     	            
+<!--{loop $list $o}-->
+<li {if $i == 1} style="border:block"{else}style="display:none"{/if}>
+<div>
+<a href="forum.php?mod=viewthread&tid=$o[tid]"><img src="mobilepic1.php?tid=$o[tid]" /></a>
+<div>{echo cutstr($o[subject],24)}</div>
+</div>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+<script src="{$mobilestyle}/mobile/v2_mobile/mobilejs.js"></script>
+<script>var slider3 = new Swipe(document.getElementById('slider3'));</script>
+
+<!--{eval $list=forumpost(2,6,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 6} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+
+<!--////////////////////////// 聚合1 //////////////////////////-->
+<div class="v2-ptb">
+<ul>
+<span>{echo m_lang('type01')}</span>
+<li><a href="javascript:;" id="tab3" onmouseover="javascript:view(3);">{echo m_lang('type03')}</a></li>
+<li><a href="javascript:;" id="tab2" onmouseover="javascript:view(2);">{echo m_lang('type02')}</a></li>
+<li><a href="javascript:;" id="tab1" class="current" onmouseover="javascript:view(1);">{echo m_lang('topnow')}</a></li>
+</ul>
+</div>
+
+<div class="v2-pl" id="top1">
+
+<!--{eval $list=forumpost(2,9,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<!--{if $i == 1}-->
+<h2><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],20)}</a></h2>
+<!--{else}--> 
+<li{if $i == 9} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+<!--{/if}-->
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top2" style="display: none;">
+<div class="v2-pty">{echo m_lang('type021')}{echo m_lang('type022')}{echo m_lang('type023')}{echo m_lang('type024')}</div>
+
+<!--{eval $list=forumpost(2,8,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 8} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top3" style="display: none;">
+<div class="v2-pty">{echo m_lang('type031')}{echo m_lang('type032')}{echo m_lang('type033')}{echo m_lang('type034')}</div>
+
+<!--{eval $list=forumpost(2,8,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 8} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+
+<!--////////////////////////// 聚合2 //////////////////////////-->
+<div class="v2-ptb">
+<ul>
+<span>{echo m_lang('type11')}</span>
+<li><a href="javascript:;" id="tab13" onmouseover="javascript:view1(3);">{echo m_lang('type13')}</a></li>
+<li><a href="javascript:;" id="tab12" onmouseover="javascript:view1(2);">{echo m_lang('type12')}</a></li>
+<li><a href="javascript:;" id="tab11" class="current" onmouseover="javascript:view1(1);">{echo m_lang('topnow')}</a></li>
+</ul>
+</div>
+
+<div class="v2-pl" id="top11">
+<ul class="v2-plist" style="position:relative;">
+<div class="v2-plistimg">
+
+<!--{eval $list=forumpost(2,2,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<div{if $i == 2} class="y"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]"><img src="mobilepic2.php?tid=$o[tid]"/></a>
+<p><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],14)}</a></p>
+</div>
+{eval $i++;}
+<!--{/loop}-->
+</div>
+
+<!--{eval $list=forumpost(2,11,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<!--{if $i == 1}--> 
+<h3><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],20)}</a></h3>
+<!--{elseif $i == 2}-->
+<div class="v2-up v2-upb">
+<a href="forum.php?mod=viewthread&tid=$o[tid]">[ {echo cutstr($o[subject],12)} ]</a>&nbsp;&nbsp;
+<!--{elseif $i == 3}-->
+<a href="forum.php?mod=viewthread&tid=$o[tid]">[ {echo cutstr($o[subject],12)} ]</a>
+</div>
+<!--{else}--> 
+<li{if $i == 11} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+<!--{/if}-->
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top12" style="display: none;">
+<div class="v2-pty">{echo m_lang('type121')}{echo m_lang('type122')}{echo m_lang('type123')}{echo m_lang('type124')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top13" style="display: none;">
+<div class="v2-pty">{echo m_lang('type131')}{echo m_lang('type132')}{echo m_lang('type133')}{echo m_lang('type134')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+
+<!--////////////////////////// 聚合3 //////////////////////////-->
+<div class="v2-ptb">
+<ul>
+<span>{echo m_lang('type21')}</span>
+<li><a href="javascript:;" id="tab23" onmouseover="javascript:view2(3);">{echo m_lang('type23')}</a></li>
+<li><a href="javascript:;" id="tab22" onmouseover="javascript:view2(2);">{echo m_lang('type22')}</a></li>
+<li><a href="javascript:;" id="tab21" class="current" onmouseover="javascript:view2(1);">{echo m_lang('topnow')}</a></li>
+</ul>
+</div>
+
+<div class="v2-pl" id="top21">
+<ul class="v2-plist" style="position:relative;">
+<div class="v2-plistimg">
+
+<!--{eval $list=forumpost(2,2,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<div{if $i == 2} class="y"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]"><img src="mobilepic2.php?tid=$o[tid]" /></a>
+<p><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],14)}</a></p>
+</div>
+{eval $i++;}
+<!--{/loop}-->
+</div>
+
+<!--{eval $list=forumpost(2,11,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<!--{if $i == 1}--> 
+<h3><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],20)}</a></h3>
+<!--{elseif $i == 2}-->
+<div class="v2-up v2-upb">
+<a href="forum.php?mod=viewthread&tid=$o[tid]">[ {echo cutstr($o[subject],12)} ]</a>&nbsp;&nbsp;
+<!--{elseif $i == 3}-->
+<a href="forum.php?mod=viewthread&tid=$o[tid]">[ {echo cutstr($o[subject],12)} ]</a>
+</div>
+<!--{else}--> 
+<li{if $i == 11} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+<!--{/if}-->
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top22" style="display: none;">
+<div class="v2-pty">{echo m_lang('type221')}{echo m_lang('type222')}{echo m_lang('type223')}{echo m_lang('type224')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top23" style="display: none;">
+<div class="v2-pty">{echo m_lang('type231')}{echo m_lang('type232')}{echo m_lang('type233')}{echo m_lang('type234')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+
+<!--////////////////////////// 聚合4 //////////////////////////-->
+<div class="v2-ptb">
+<ul>
+<span>{echo m_lang('type31')}</span>
+<li><a href="javascript:;" id="tab33" onmouseover="javascript:view3(3);">{echo m_lang('type33')}</a></li>
+<li><a href="javascript:;" id="tab32" onmouseover="javascript:view3(2);">{echo m_lang('type32')}</a></li>
+<li><a href="javascript:;" id="tab31" class="current" onmouseover="javascript:view3(1);">{echo m_lang('topnow')}</a></li>
+</ul>
+</div>
+
+<div class="v2-pl" id="top31">
+<ul class="v2-plist">
+
+<!--{eval $list=forumpost(2,9,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<!--{if $i == 1}-->
+<h2><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],20)}</a></h2>
+<!--{else}--> 
+<li{if $i == 9} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+<!--{/if}-->
+{eval $i++;}
+<!--{/loop}-->
+
+<div class="v2-plistimg v2-plistimgb">
+
+<!--{eval $list=forumpost(2,2,'lastpost',0,0,0,30)}-->
+{eval $i=1;}
+<!--{loop $list $o}-->
+<div{if $i == 2} class="y"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]"><img src="mobilepic2.php?tid=$o[tid]"/></a>
+<p><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],14)}</a></p>
+</div>
+{eval $i++;}
+<!--{/loop}-->
+</div>
+</ul>
+</div>
+
+<div class="v2-pl" id="top32" style="display: none;">
+<div class="v2-pty">{echo m_lang('type321')}{echo m_lang('type322')}{echo m_lang('type323')}{echo m_lang('type324')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top33" style="display: none;">
+<div class="v2-pty">{echo m_lang('type031')}{echo m_lang('type332')}{echo m_lang('type333')}{echo m_lang('type334')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+
+<!--////////////////////////// 聚合5 //////////////////////////-->
+<div class="v2-ptb">
+<ul>
+<span>{echo m_lang('type41')}</span>
+<li><a href="javascript:;" id="tab43" onmouseover="javascript:view4(3);">{echo m_lang('type43')}</a></li>
+<li><a href="javascript:;" id="tab42" onmouseover="javascript:view4(2);">{echo m_lang('type42')}</a></li>
+<li><a href="javascript:;" id="tab41" class="current" onmouseover="javascript:view4(1);">{echo m_lang('topnow')}</a></li>
+</ul>
+</div>
+
+<div class="v2-pl" id="top41">
+
+<!--{eval $list=forumpost(2,11,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<!--{if $i == 1}-->
+<h2><a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],20)}</a></h2>
+<!--{else}--> 
+<li{if $i == 11} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+<!--{/if}-->
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top42" style="display: none;">
+<div class="v2-pty">{echo m_lang('type421')}{echo m_lang('type422')}{echo m_lang('type423')}{echo m_lang('type424')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="v2-pl" id="top43" style="display: none;">
+<div class="v2-pty">{echo m_lang('type431')}{echo m_lang('type432')}{echo m_lang('type433')}{echo m_lang('type434')}</div>
+
+<!--{eval $list=forumpost(2,10,'lastpost',0,0,0,30)}-->
+<ul class="v2-plist">
+{eval $i=1;}
+<!--{loop $list $o}-->
+<li{if $i == 10} style="border:none;"{/if}>
+<a href="forum.php?mod=viewthread&tid=$o[tid]">{echo cutstr($o[subject],28)}</a>
+<span>{$o[replies]}</span>
+</li>
+{eval $i++;}
+<!--{/loop}-->
+</ul>
+</div>

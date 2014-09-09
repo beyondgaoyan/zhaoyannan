@@ -1,0 +1,209 @@
+{template aljbd:header_hao}
+<script src="source/plugin/aljbd/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var jq=jQuery.noConflict();
+</script>
+<link href="source/plugin/aljbd/css/common.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.dz_nvsec {
+  border-bottom: 2px solid #FF6600;
+  height: 40px;
+  margin: 10px 0;
+}
+.dz_nav {
+  float: left;
+  height: 40px;
+  line-height: 40px;
+}
+.dz_nav a {
+  float: left;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 20px;
+  color:#666666;
+}
+.dz_nav a.a {
+  background: none repeat scroll 0 0 #FF6600;
+  color: #FFFFFF;
+}
+.dz_nav a:hover {
+  background: none repeat scroll 0 0 #FF6600;
+  color:#FFFFFF;
+  text-decoration: none;
+}
+.fr {
+  display: inline;
+  float: right !important;
+}
+.descxxx {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: block;
+  font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -20px;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.descxxx{
+  color: #FFFFFF;
+}
+.profile a{
+color: #105CB6;
+    text-decoration: none;
+}
+.profile a:hover{
+color: #105CB6;
+    text-decoration: underline;
+}
+</style>
+<div class="wrap cl">
+<div class="main_lj">
+
+<div id="pt"> <a href="./" id="fjump" class="nvvv" title="{$_G['setting']['bbname']}">{$_G['setting']['bbname']}</a><em>&rsaquo;</em>
+<a href="">搜索</a>
+</div>
+<div class="search">
+<div class="z">关键字 "<strong class="xi1">$name</strong>", 共查找到 <strong>$num</strong> 个$mod</div>
+</div>
+
+<div class="mbm">
+
+
+<div class="cl">
+{if $_GET['view']=='list'||(empty($_GET['view'])&&empty($config['pic']))}
+<ul class="viewlist cl">
+{loop $bdlist $bd}
+<!--newcomment--><li>
+<div class="thumb"><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank"><img alt="$bd['name']" src="{if file_exists($bd['logo'])}$bd['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" width="100px" height="100px"></a></div>
+<div class="info">
+<h3 class="xi2"><a title="$bd['name']" href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank">$bd['name']</a></h3>
+<p class="xg1">$bd['addr'], $bd['tel']</p>
+{if $config['isqq']}<p style="padding-top:5px;">{if $bd['qq']}QQ: $bd['q']{/if}</p>{/if}
+<p class="discount xg1"></p>
+</div>
+
+{eval $avg=C::t('#aljbd#aljbd_comment')->count_avg_by_bid($bd['id']);$avg=intval($avg);}
+<div class="attribute cl"><p class="s2 xg1 cl"><span class="score z"><img title="{$avg}" alt="{$avg}" src="source/plugin/aljbd/images/{$avg}.gif"></span><span class="y"><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank">{lang aljbd:s49}({$bd['view']})</a> <a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank">{lang aljbd:s50}({$bd['comment']})</a></span></p>
+{if $bd['c']['uid']}
+<div class="comment cl"><a href="home.php?mod=space&uid={$bd['c']['uid']}&do=profile" target="_blank"><img width="20" height="20" src="{eval echo avatar($bd['c']['uid'],'small',true)}" alt="avatar"><span class="author">
+$bd['c']['username']
+</span></a>
+<span>:</span>
+<a href="plugin.php?id=aljbd&act=view&bid={$bd['id']}#comment{$bd['c']['id']}" target="_blank"><span>{eval echo mb_substr($bd['c']['content'],0,7,$_G['charset']);}..</span></a>
+</div>
+{/if}
+{if $config['isqq']}<p class="y"><br/><br/><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank"><img src="$config['dptb']"></a></p>{/if}
+</div>
+</li>
+{/loop}
+</ul>
+{else}
+<ul class="viewlist_enlarge cl">
+{eval $ii=1;}
+{loop $bdlist $bd}
+{eval $avg=C::t('#aljbd#aljbd_comment')->count_avg_by_bid($bd['id']);$avg=intval($avg);}
+{eval $ren=C::t('#aljbd#aljbd')->fetch_all_by_renzheng($bd['id']);$ren=$ren['renzheng'];}
+<li {if $ii%3==0}class="mr0"{/if} {if $config['isqq']}style="height:358px;"{/if}>
+<div class="thumb"><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank"><img alt="$bd['name']" src="{if file_exists($bd['logo'])}$bd['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"></a></div>
+<h3 class="xi2 cl">
+<a title="$bd['name']" href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank" class="v">$bd['name']{if $ren==1}<img src="source/plugin/aljbd/images/vip.gif">{/if}</a>
+</h3>
+<p class="xg1 mtn address_n_tel" >
+{eval echo mb_substr($bd['addr'],0,25,$_G['charset']);}, $bd['tel']...</p>
+<p class="s2 xg1 cl"><span class="score z"><img title="{$bd['avg']}" alt="{$avg}" src="source/plugin/aljbd/images/{$avg}.gif"></span><span class="y">{lang aljbd:s51}({$bd['view']}) {lang aljbd:s52}($bd['comment'])</span></p>
+{if $config['isqq']}<p class="s2 xg1 cl"><span class="score z">{if $bd['qq']}{$bd['q']}{/if}</span><span class="y"><a class="y" href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank"><img src="$config['dptb']"></a></span></p>{/if}
+
+{if $bd['c']}
+<div class="comment cl"><a href="home.php?mod=space&uid={$bd['c']['uid']}&do=profile" target="_blank"><img width="20" height="20" src="{eval echo avatar($bd['c']['uid'],'small',true)}" alt="avatar"><span class="author">$bd['c']['username']</span></a>
+<span>:</span>
+<a href="plugin.php?id=aljbd&act=view&bid={$bd['id']}#comment{$bd['c']['id']}" target="_blank"><span>{eval echo mb_substr($bd['c']['content'],0,7,$_G['charset']);}..</span></a></div>
+{/if}
+</li>
+{eval $ii++;}
+{/loop}
+</ul>
+{/if}
+<div class="mtm cl"><div class="pages cl">
+
+$paging</div></div>
+</div>
+</div></div>
+<div class="side">
+<div class="mbm cl" id="button">
+<a style="float:left;" class="btn" href="plugin.php?id=aljbd&act=attend" >{lang aljbd:s53}</a><a class="btn btnr" href="plugin.php?id=aljbd&act=member" onclick="{if empty($aljbd)}showDialog('{lang aljbd:s54}');return false;{else}location.href=this.href{/if}">{lang aljbd:s55}</a></div>
+<div class="cl hotvip">
+<div class="sidetitle cl">
+<h2 class="z">{lang aljbd:s56}</h2>
+</div>
+
+<ul>
+{eval $i=1;}
+{loop $recommendlist $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}
+</ul>
+</div>
+<!--{if file_exists('source/plugin/aljbd/com/good.php')}
+<div class="cl hotvip2">
+<div class="sidetitle cl">
+<h2 class="z">{lang aljbd:list_goods_6}</h2>
+<h2><a class="more y" href="{if $config['isrewrite']}goods.html{else}plugin.php?id=aljbd&act=goods{/if}">{lang aljbd:list_goods_7}</a></h2>
+</div>
+
+<ul>
+{eval $i=1;}
+{loop $recommendlist_goods $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_good_{$recommend['bid']}_{$recommend[id]}.html{else}plugin.php?id=aljbd&act=goodview&bid={$recommend['bid']}&gid={$recommend[id]}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['pic1']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}
+</ul>
+</div>
+{/if}
+{if file_exists('source/plugin/aljbd/com/notice.php')}
+<div class="wgt" id="notice_list" style="margin-bottom:10px;">
+<div class="title cl" style="padding-top:0px;">
+<h2 class="z">{lang aljbd:list_goods_8}</h2>
+
+</div>
+<ul>
+{loop $notice $n}
+<li><a title="$n['subject']" style="" href="{if $config['isrewrite']}brand_notice_{$n['bid']}_{$n[id]}.html{else}plugin.php?id=aljbd&act=noticeview&bid={$n['bid']}&nid=$n['id']{/if}" target="_blank">{eval echo mb_substr($n['subject'],0,20,$_G['charset']);}</a></li>
+{/loop}
+</ul>
+</div>
+{/if}
+$config['ad']
+</div>-->
+<script src="source/plugin/aljbd/js/simpleslide.js" type="text/javascript" charset="utf-8"></script>
+<script>
+jq(function(){
+jq('.hotvip li').mouseover(function(){
+jq(this).addClass('active').siblings().removeClass('active');
+});
+jq('.hotvip:eq(0) ul').simpleSlideClass({intervalTime: 2});
+});
+jq(function(){
+jq('.hotvip2 li').mouseover(function(){
+jq(this).addClass('active').siblings().removeClass('active');
+});
+jq('.hotvip2:eq(0) ul').simpleSlideClass({intervalTime: 2});
+})
+
+</script>
+
+</div>
+
+{template aljbd:footer_hao} 

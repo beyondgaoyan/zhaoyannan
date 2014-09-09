@@ -1,0 +1,21 @@
+<!--{subtemplate common/header}-->
+
+<!--{if $_GET['mod'] == 'pic'}-->
+<!--{subtemplate wap/pic}-->
+<!--{elseif $_GET['mod'] == 'forum'}-->
+<!--{subtemplate wap/forum}-->
+<!--{elseif $_GET['mod'] == 'portal'}-->
+<!--{if $ctstyle == 1}-->
+<!--{$imenus}-->
+<!--{$adheader}-->
+<!--{hook/index_top_mobile}-->
+<!--{eval blocktemplate('stportal',$stportal);}-->
+<!--{else}-->
+<!--{eval header("location: forum.php?mod=$indexstyle"); }-->
+<!--{/if}-->
+<!--{else}-->
+<!--{eval header("location: forum.php?mod=$indexstyle"); }-->
+<!--{/if}-->
+
+<!--{hook/index_bottom_mobile}-->
+<!--{subtemplate common/footer}-->

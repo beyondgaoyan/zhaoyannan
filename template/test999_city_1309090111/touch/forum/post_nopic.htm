@@ -1,0 +1,195 @@
+
+<!--{block actiontitle}-->
+<!--{if $_GET['action'] == 'newthread'}-->
+	<!--{if $special == 0}-->{lang post_newthread}
+	<!--{elseif $special == 1}-->{lang post_newthreadpoll}
+	<!--{elseif $special == 2}-->{lang post_newthreadtrade}
+	<!--{elseif $special == 3}-->{lang post_newthreadreward}
+	<!--{elseif $special == 4}-->{lang post_newthreadactivity}
+	<!--{elseif $special == 5}-->{lang post_newthreaddebate}
+	<!--{elseif $specialextra}-->{$_G['setting']['threadplugins'][$specialextra][name]}
+	<!--{/if}-->
+<!--{elseif $_GET['action'] == 'reply'}-->
+	{lang join_thread}
+<!--{elseif $_GET['action'] == 'edit'}-->
+	<!--{if $special == 2}-->{lang edit_trade}<!--{else}-->{lang edit_thread}<!--{/if}-->
+<!--{/if}-->
+<!--{/block}-->
+
+<!--{if $_GET['action'] != 'newthread'}-->
+	<!--{eval $subjectcut = cutstr($thread[subject], 30);}-->
+<!--{/if}-->
+
+<!--{block upnavlink}-->
+	forum.php?mod=forumdisplay&fid={$_GET[fid]}
+<!--{/block}-->
+<div class="ct">
+
+<!--{if $_G['forum']['type'] == 'forum'}-->
+<div class="pt{if $_GET['action'] == 'newthread'}{else} bb{/if}">
+<!--{if $ctstyle == 1}-->
+<a href="forum.php?mod=forum">{echo m_lang('forum')}</a>
+<!--{else}-->
+<a href="forum.php">{echo m_lang('home')}</a>
+<!--{/if}-->
+<em> &gt; </em> <a href="forum.php?mod=forumdisplay&fid={$_G['forum']['fid']}">{$_G['forum']['name']}</a> <em> &gt; </em> $actiontitle
+</div>
+<!--{else}-->
+<div class="pt{if $_GET['action'] == 'newthread'}{else} bb{/if}">
+<!--{if $ctstyle == 1}-->
+<a href="forum.php?mod=forum">{echo m_lang('forum')}</a>
+<!--{else}-->
+<a href="forum.php">{echo m_lang('home')}</a>
+<!--{/if}-->
+<em> &gt; </em> <a href="forum.php?mod=forumdisplay&fid={$_G['fid']}">{$_G['forum']['name']}</a> <em> &gt; </em> $actiontitle
+</div>
+<!--{/if}-->
+
+<!--{if $_GET['action'] == 'newthread'}-->
+<div class="mmt nth bb">
+<!--{if !$_G['forum']['allowspecialonly']}--><a href="forum.php?mod=post&action=newthread&fid=$_G[fid]" {if ($_GET[sortid] || !$special) && $_GET['action'] != 'edit' && $_GET['action'] != 'reply'}class="a"{/if}>{lang send_threads}</a><!--{/if}-->
+
+<!--{if $_G['group']['allowpostpoll']}--><a href="forum.php?mod=post&action=newthread&fid=$_G[fid]&special=1" {if !$_GET[sortid] && $special == 1}class="a"{/if}>{lang post_newthreadpoll}</a><!--{/if}-->
+
+<!--{if $_G['group']['allowpostreward']}--><a href="forum.php?mod=post&action=newthread&fid=$_G[fid]&special=3" {if !$_GET[sortid] && $special == 3}class="a"{/if}>{lang post_newthreadreward}</a><!--{/if}-->
+
+<!--{if $_G['group']['allowpostdebate']}--><a href="forum.php?mod=post&action=newthread&fid=$_G[fid]&special=5" {if !$_GET[sortid] && $special == 5}class="a"{/if}>{lang post_newthreaddebate}</a><!--{/if}-->
+
+<!--{if $_G['setting']['threadplugins']}-->
+<!--{loop $_G['forum']['threadplugin'] $tpid}-->
+<!--{if array_key_exists($tpid, $_G['setting']['threadplugins']) && @in_array($tpid, $_G['group']['allowthreadplugin'])}-->
+<a href="forum.php?mod=post&action=newthread&fid={$_G[fid]}&specialextra=$tpid" {if $specialextra==$tpid}class="a"{/if}>{$_G[setting][threadplugins][$tpid][name]}</a>
+<!--{/if}-->
+<!--{/loop}-->
+<!--{/if}-->
+
+</div>
+<!--{/if}-->
+
+<div class="ipc">
+
+<!--{if $special != 2 && $special != 4 }-->
+<!--{eval $adveditor = $isfirstpost && $special && ($_GET['action'] == 'newthread' || $_GET['action'] == 'reply' && !empty($_GET['addtrade']) || $_GET['action'] == 'edit' );}-->
+<form method="post" name="inputform" id="postform"
+			{if $_GET[action] == 'newthread'}action="forum.php?mod=post&action={if $special != 2}newthread{else}newtrade{/if}&fid=$_G[fid]&extra=$extra&topicsubmit=yes"
+			{elseif $_GET[action] == 'reply'}action="forum.php?mod=post&action=reply&fid=$_G[fid]&tid=$_G[tid]&extra=$extra&replysubmit=yes"
+			{elseif $_GET[action] == 'edit'}action="forum.php?mod=post&action=edit&extra=$extra&editsubmit=yes" $enctype
+			{/if}>
+<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}" />
+<input type="hidden" name="posttime" id="posttime" value="{TIMESTAMP}" />
+<!--{if !empty($_GET['modthreadkey'])}--><input type="hidden" name="modthreadkey" id="modthreadkey" value="$_GET['modthreadkey']" /><!--{/if}-->
+<!--{if $_GET[action] == 'reply'}-->
+	<input type="hidden" name="noticeauthor" value="$noticeauthor" />
+	<input type="hidden" name="noticetrimstr" value="$noticetrimstr" />
+	<input type="hidden" name="noticeauthormsg" value="$noticeauthormsg" />
+	<!--{if $reppid}-->
+		<input type="hidden" name="reppid" value="$reppid" />
+	<!--{/if}-->
+	<!--{if $_GET[reppost]}-->
+		<input type="hidden" name="reppost" value="$_GET[reppost]" />
+	<!--{elseif $_GET[repquote]}-->
+		<input type="hidden" name="reppost" value="$_GET[repquote]" />
+	<!--{/if}-->
+<!--{/if}-->
+<!--{if $_GET[action] == 'edit'}-->
+	<input type="hidden" name="fid" id="fid" value="$_G[fid]" />
+	<input type="hidden" name="tid" value="$_G[tid]" />
+	<input type="hidden" name="pid" value="$pid" />
+	<input type="hidden" name="page" value="$_GET[page]" />
+<!--{/if}-->
+
+<!--{if $special}-->
+	<input type="hidden" name="special" value="$special" />
+<!--{/if}-->
+<!--{if $specialextra}-->
+	<input type="hidden" name="specialextra" value="$specialextra" />
+<!--{/if}-->
+<div class="box">
+    <!--{if $adveditor}-->    
+        <!--{if $special == 1}--><!--{template forum/post_poll}-->
+        <!--{elseif $special == 3}--><!--{template forum/post_reward}-->
+        <!--{elseif $special == 5}--><!--{template forum/post_debate}-->
+        <!--{elseif $specialextra}--><div>$threadplughtml</div>
+        <!--{/if}-->       
+    <!--{/if}-->
+<!--{if $isfirstpost && $sortid}-->
+<div class="bm inbox xg1">
+	{lang threadsort_error}
+</div>
+<!--{else}-->
+<div class="inbox">
+    <!--{if $_GET['action'] != 'reply'}-->
+    
+	<!--{if $isfirstpost && !empty($_G['forum'][threadtypes][types])}-->
+    <div class="ptypes">
+    <div class="ipcl ptype" id="ptypes_menu" >
+        <select name="typeid" id="typeid" width="80">
+            <option value="0">{lang select_thread_catgory}</option>
+            <!--{loop $_G['forum'][threadtypes][types] $typeid $name}-->
+		<!--{if empty($_G['forum']['threadtypes']['moderators'][$typeid]) || $_G['forum']['ismoderator']}-->
+		<option value="$typeid"{if $thread['typeid'] == $typeid || $_GET['typeid'] == $typeid} selected="selected"{/if}><!--{echo strip_tags($name);}--></option>
+		<!--{/if}-->
+            <!--{/loop}-->
+        </select>
+        </div>
+        <!--{if $_G['forum'][threadtypes][required] == 1}--><span class="xi1"> *{lang required}</span><!--{else}--><span class="xi1"> {echo m_lang('opt')}</span><!--{/if}-->
+        </div>
+    <!--{/if}-->
+    
+    <div class="ipcl xg1"><span>{lang subject}:</span></div>
+    
+    <p><input type="text" name="subject" value="$postinfo[subject]" size="25" style="width:100%;" /></p>
+	<!--{else}-->
+    <div class="ipcl xg1">
+	RE: $thread['subject']
+		<!--{if $quotemessage}-->
+			$quotemessage
+		<!--{/if}-->
+        </div>
+	<!--{/if}-->
+</div>
+
+ <div class="ipcp">
+ <!--{$msmile}-->
+ <div class="ipcc">
+  <textarea name="$editor[textarea]" cols="24" rows="7" id="{$editorid}_textarea" >$postinfo[message]</textarea>
+ </div>
+ </div>
+ 
+	<!--{if $_GET[action] != 'edit' && checkperm('seccode') && ($secqaacheck || $seccodecheck)}-->
+	<!--{subtemplate common/seccheck}-->
+	<!--{/if}-->
+
+<div class="inbox">
+    <input type="submit" id="postsubmit" name="{if $_GET[action] == 'newthread'}topicsubmit{elseif $_GET[action] == 'reply'}replysubmit{elseif $_GET[action] == 'edit'}editsubmit{/if}" value="<!--{if $_GET[action] == 'newthread'}-->{lang post_newthread}<!--{elseif $_GET[action] == 'reply'}-->{lang join_thread}<!--{elseif $_GET[action] == 'edit'}-->{lang edit_save}<!--{/if}-->" class="ibt ibtp" />
+</div>
+<!--{/if}-->
+</div>
+</form>
+<!--{else}-->
+	<div class="box xg1">
+	<!--{if $special == '2'}-->
+	{lang send_special_trade_error}
+    <!--{elseif $special == '4'}-->
+	{lang send_special_activity_error}
+    <!--{/if}-->
+    </div>
+<!--{/if}-->
+</div>
+
+<script language="javascript">
+function insertIcon(iconCode) {
+ var txtarea = document.inputform.$editor[textarea];
+ iconCode = '' + iconCode + '';
+ if (txtarea.createTextRange && txtarea.caretPos) {
+ var caretPos = txtarea.caretPos;
+ caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == '' ? iconCode + '' : iconCode;
+ txtarea.focus();
+ } else {
+ txtarea.value += iconCode;
+ txtarea.focus();
+ }
+}
+</script>
+
+</div>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-control" content="{if $_G['setting']['mobile'][mobilecachetime] > 0}{$_G['setting']['mobile'][mobilecachetime]}{else}no-cache{/if}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no" />
+<meta name="keywords" content="$metakeywords" />
+<meta name="description" content="$metadescription" />
+<title>$navtitle</title>
+</head>
+<link href="source/plugin/aljbd/css/touch.css" rel="stylesheet" type="text/css">
+
+<body><div class="head_bar">
+<table>
+<tbody><tr>
+<td class="head_bar_td_w50"><div class="head_back"><a href="$_G['siteurl']"><span>{lang aljbd:sj_list_1}</span></a></div></td>
+<td><div class="head_name"><a href="{if $config[isrewrite]}brand.html{else}plugin.php?id=aljbd{/if}"><span>{lang aljbd:sj_list_2}</span></a></div></td>
+<td class="head_bar_td_w55 t_r"></td>
+</tr>
+</tbody></table>
+</div>
+<div class="head_bar_fix"></div>
+<div id="menu" class="menu" style="display: none;">
+
+<div class="c_b"></div>
+</div>
+<div class="fm">
+<form action="plugin.php?id=aljbd" method="post">
+<input type="hidden" value="{FORMHASH}" name="formhash">
+<input type="text" class="fm_inp" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-widget="quickdelete" size="15" value="" name="kw">
+<input type="submit" class="fm_sbm" value="{lang aljbd:sj_list_3}" name="submit">
+</form>
+</div>
+
+<div class="main">
+{loop $bdlist $bd}
+<div class="listimg" onclick="location.href='{if $config[isrewrite]}brand_shop_{$bd[id]}.html{else}plugin.php?id=aljbd&act=view&bid={$bd[id]}{/if}'">
+<a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}"><img width="55" height="55" alt="$bd['name']" src="$bd['logo']"></a>
+<ul>
+<li><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}"><strong>$bd['name']</strong></a></li>
+<li><em>{eval echo gmdate('Y-m-d H:i:s',$bd['dateline']+8*3600);}</em></li>
+<li ><span>$bd['addr'], $bd['tel']...</span></li>
+</ul>
+</div>
+{/loop}
+<div class="pages">$shangyiye $xiayiye</div><div class="fm">
+<form method="post" action="plugin.php?id=aljbd">
+<input type="hidden" value="{FORMHASH}" name="formhash">
+
+<input type="text" class="fm_inp" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-widget="quickdelete" size="15" value="" name="kw">
+<input type="submit" class="fm_sbm" value="{lang aljbd:sj_list_3}" name="submit">
+</form>
+</div></div>
+<div style="background: none repeat scroll 0 0 #0287E4;color: #FFFFFF;margin-top: 10px;width: 100%;text-align:center;height:40px;">
+<ul style="padding:10px 0;">
+    <li>
+{lang aljbd:sj_list_4}{eval echo gmdate('Y-m-d H:i:s',$_G['timestamp']+8*3600);}    </li>
+</ul>
+</div>
+<!--{eval updatesession();}-->
+<!--{if defined('IN_MOBILE')}-->
+	<!--{eval output();}-->
+<!--{else}-->
+	<!--{eval output_preview();}-->
+<!--{/if}-->

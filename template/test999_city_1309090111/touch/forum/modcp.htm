@@ -1,0 +1,18 @@
+<!--{subtemplate common/header}-->
+<div class="ct">
+<div class="pt bb"><a href="javascript:history.back();" onclick="javascript:history.back();" >{lang back}</a> <em> &gt; </em> <!--{if $op == 'ban'}-->{lang mod_member_ban}<!--{else}-->{lang panel_login}<!--{/if}--></div>
+<div class="ipc">
+<!--{if $script == 'noperm'}-->
+        <h1 class="mtb mbb xi1">{lang mod_option_error}</h1>
+        <div class="ipcl xg1">{lang mod_error_invalid}</div>
+        <div class="ipcl xg1">{lang mod_notice}</div>
+<!--{elseif !empty($modtpl)}-->
+	<!--{if in_array($script, array('member', 'login'))}-->
+    	<!--{eval include(template($modtpl));}-->
+    <!--{else}-->
+    <div class="bm_c mbm mtm">{lang admin_threadtopicadmin_error}</div>
+    <!--{/if}-->
+<!--{/if}-->
+</div>
+</div>
+<!--{subtemplate common/footer}-->

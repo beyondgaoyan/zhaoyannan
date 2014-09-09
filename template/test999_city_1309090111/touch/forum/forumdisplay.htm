@@ -1,0 +1,181 @@
+<!--{subtemplate common/header}-->
+<!--{hook/forumdisplay_top_mobile}-->
+<div class="ct">
+<div class="pt">
+<!--{if $_G['forum']['type'] == 'forum'}-->
+<!--{if $ctstyle == 1}-->
+<a href="forum.php?mod=forum">{echo m_lang('forum')}</a>
+<!--{else}-->
+<a href="forum.php">{echo m_lang('home')}</a>
+<!--{/if}-->
+ <em> &gt; </em> <a href="forum.php?mod=forumdisplay&fid={$_G['forum']['fid']}">{echo cutstr(strip_tags($_G['forum']['name']),20)}</a>
+<!--{else}-->
+<!--{if $ctstyle == 1}-->
+<a href="forum.php?mod=forum">{echo m_lang('forum')}</a>
+<!--{else}-->
+<a href="forum.php">{echo m_lang('home')}</a>
+<!--{/if}-->
+ <em> &gt; </em> <a href="forum.php?mod=forumdisplay&fid={$forum_up['fid']}">{echo cutstr(strip_tags($forum_up['name']),6)}</a> <em> &gt; </em> {echo cutstr(strip_tags($_G['forum']['name']),16)} 
+<!--{/if}-->
+<!--{if $_G['page'] == 1 && $_G['forum']['rules']}--><p>{echo cutstr(strip_tags($_G['forum'][rules]),80)}</p><!--{/if}-->
+</div>
+
+
+<div class="nmt">
+<a href="{if $_G['group']['allowpost']}forum.php?mod=post&action=newthread&fid=$_G[fid]{else}{if $_G['uid']}forum.php?mod=post&action=newthread&fid=$_G[fid]{else}member.php?mod=logging&action=login{/if}{/if}" class="z f_pst" >{lang send_threads}</a>
+<a href="home.php?mod=spacecp&ac=favorite&type=forum&id={$_G[fid]}" >{lang favorite}</a>
+<!--{if !$_G[setting][mobile][mobilesimpletype]}--><!--{if ($_G['forum']['threadtypes'] && $_G['forum']['threadtypes']['listable']) || $_G['forum']['threadsorts']}--><a href="javascript:;" id="thtys" onclick="dbox('thtys','thtys');">{echo m_lang('thtys')}</a><!--{/if}--><!--{/if}-->
+<!--{if $subexists}--><a href="javascript:;" id="subfrm" onclick="dbox('subfrm','subfrm');"{if $subopen == 1 && $_G['page'] == 1} class="subfrm"{/if}>{echo m_lang('subfrm')}</a><!--{/if}-->
+
+</div>
+
+<!--{if $subexists}-->
+    <div class="catlist clnb" id="subfrm_menu" style="display:{if $subopen == 1 && $_G['page'] == 1}block{else}none{/if}">        
+        <ul>
+        <!--{loop $sublist $sub}-->
+        <li>
+			 <!--{if $sub[icon]}-->
+			$sub[icon]
+			 <!--{else}-->
+			<a href="forum.php?mod=forumdisplay&fid={$sub[fid]}"><img src="./mplus/img/forum{if $sub[folder]}_new{/if}.png" alt="$sub[name]" /></a>
+			 <!--{/if}-->
+        	 <a href="forum.php?mod=forumdisplay&fid={$sub[fid]}" class="a">
+             <p class="f_nm">{$sub['name']}</p>
+             <!--{if $sub[description]}--><p class="xg1 f_dp">{echo cutstr(strip_tags($sub[description]),30)}</p><!--{/if}-->
+             <!--{if $sub[todayposts]}--><span>$sub[todayposts]</span><!--{/if}-->
+             </a>
+        </li>
+        <!--{/loop}-->
+        </ul>
+    </div>
+<!--{/if}-->
+
+<!--{if !$_G[setting][mobile][mobilesimpletype]}-->
+    <!--{if ($_G['forum']['threadtypes'] && $_G['forum']['threadtypes']['listable']) || $_G['forum']['threadsorts']}-->
+    <div id="thtys_menu" class="thtyss" style="display:none">
+        <!--{if $_G['forum']['threadtypes']}-->                        
+            <a href="forum.php?mod=forumdisplay&fid=$_G[fid]{if $_GET['archiveid']}&archiveid={$_GET['archiveid']}{/if}" class="<!--{if $_GET['filter'] != 'typeid'}-->a<!--{/if}-->">{lang forum_viewall}</a>
+            <!--{loop $_G['forum']['threadtypes']['types'] $id $name}-->
+                 <a href="forum.php?mod=forumdisplay&fid=$_G[fid]&filter=typeid&typeid=$id$forumdisplayadd[typeid]" {if $_GET['filter'] == 'typeid' && $_GET['typeid'] == $id} class="a"{/if}>$name</a>
+            <!--{/loop}-->
+        <!--{/if}-->
+
+        <!--{if $_G['forum']['threadsorts']}-->                        
+            <!--{loop $_G['forum']['threadsorts']['types'] $id $name}-->
+                <a href="forum.php?mod=forumdisplay&fid=$_G[fid]&filter=sortid&sortid=$id$forumdisplayadd[sortid]" class="<!--{if $_GET[sortid] == $id}-->a<!--{/if}-->">$name</a>
+            <!--{/loop}-->            
+        <!--{/if}-->
+        </div>
+    <!--{/if}-->
+<!--{/if}-->
+
+
+<!--//forumdisplay_list template start-->
+<!--{if !$subforumonly}-->
+
+    <!--{if empty($_G['forum']['picstyle']) || $_G['cookie']['forumdefstyle']}-->
+    
+    	<ul id="alist" class="thlist">
+
+            <!--{if $_G['forum_threadcount']}-->
+				<!--{loop $_G['forum_threadlist'] $key $thread}-->
+                <li>
+                <a href="forum.php?mod=viewthread&tid=$thread[tid]">
+
+                    <h1>
+                    <!--{if $thread[folder] == 'lock'}-->
+                    <img src="./mplus/img/l1.png" height="15" />
+                    <!--{elseif $thread['special'] == 1}-->
+                    <img src="./mplus/img/p1.png" height="15" />
+                    <!--{elseif $thread['special'] == 2}-->
+                    <img src="./mplus/img/t1.png" height="15" />
+                    <!--{elseif $thread['special'] == 3}-->
+                    <img src="./mplus/img/r1.png" height="15" />
+                    <!--{elseif $thread['special'] == 4}-->
+                    <img src="./mplus/img/a1.png" height="15" />
+                    <!--{elseif $thread['special'] == 5}-->
+                    <img src="./mplus/img/d1.png" height="15" />
+                    <!--{elseif in_array($thread['displayorder'], array(1, 2, 3, 4))}-->
+                    <img src="./mplus/img/p_1.png" height="15" />
+                    <!--{else}-->                    
+                    <!--{/if}-->
+                    {$thread[subject]}
+                    </h1>
+                        <p>
+                        <!--{if $thread['authorid'] && $thread['author']}-->
+                            {$thread[author]}<!--{else}--><!--{if $_G['forum']['ismoderator']}-->{lang anonymous}<!--{else}-->{$_G[setting][anonymoustext]}<!--{/if}--><!--{/if}--><span class="pipe">-</span>{$thread[dateline]} <span class="replies"><!--{if $thread[replies] > 0}-->{$thread[replies]}<!--{else}-->0<!--{/if}--></span>
+                        </p>                        
+                        </a> 
+                        
+                    </li>
+                <!--{/loop}-->
+            <!--{else}-->
+            <li class="wmt">{lang forum_nothreads}</li>
+            <!--{/if}-->
+        </ul>
+        <!--{else}-->               
+              
+              <ul id="alist" class="fplist">                      
+                {eval $i=1;}
+				<!--{loop $_G['forum_threadlist'] $key $thread}-->                            
+				<li> 
+                <a href="forum.php?mod=viewthread&tid=$thread[tid]" >                
+                <h1>$thread[subject]</h1>                
+                <p>
+                <!--{if $thread['authorid'] && $thread['author']}-->
+                {$thread[author]}<!--{else}--><!--{if $_G['forum']['ismoderator']}-->{lang anonymous}<!--{else}-->{$_G[setting][anonymoustext]}<!--{/if}--><!--{/if}--><span class="pipe">-</span>{$thread[dateline]} <span class="replies"><!--{if $thread[replies] > 0}-->{$thread[replies]}<!--{else}-->0<!--{/if}--></span>
+                </p>                       
+                <!--{if $thread['cover']}-->
+				<img src="$thread[coverpath]" class="cphoto" />
+				<!--{else}-->
+                <img src="./mplus/img/nopic.png" class="cphoto" />
+				<!--{/if}-->                
+                </a>
+				</li>                            
+                {eval $i++;}
+				<!--{/loop}-->
+              </ul>              
+                            
+        <!--{/if}-->
+        
+<!--{if $pagestyle == 1}-->        
+<!--{if $_G['forum_threadcount'] > $_G['tpp']}-->
+<div id="ajaxshow"></div>          
+<script type="text/javascript">
+var page=$_G['page'];
+var allpage={echo $thispage = ceil($_G['forum_threadcount'] / $_G['tpp']);};
+function ajaxpage(url){
+						$("ajaxld").style.display='block';
+						$("ajnt").style.display='none';
+						var x = new Ajax("HTML");
+						page++;
+						url=url+'&page='+page;
+						x.get(url, function (s) {
+							s = s.replace(/\\n|\\r/g, "");//alert(s);
+							s = s.substring(s.indexOf("<ul id=\"alist\""), s.indexOf("<div id=\"ajaxshow\"></div>"));//alert(s);
+							$('ajaxshow').innerHTML+=s;
+							$("ajaxld").style.display='none';
+						if(page==allpage){
+							$("ajnt").style.display='none';
+						}else{
+							$("ajnt").style.display='block';
+						}
+						});
+						return false;
+}
+</script>
+<div class="a_pg" id="a_pg"> 
+<div id="ajaxld"><img src="./mplus/img/load.gif" /> {echo m_lang('load_pic')}</div>
+<div id="ajnt"><a href="forum.php?mod=forumdisplay&fid={$_G[fid]}&filter={$filter}&orderby={$_GET[orderby]}{$forumdisplayadd[page]}&{$multipage_archive}" onclick="return ajaxpage(this.href);">{echo m_lang('load')}</a></div>
+</div>
+<!--{/if}-->
+<!--{else}-->
+<div class="pgbox">$multipage</div>
+<!--{/if}-->
+
+<!--{/if}-->
+
+<!--//forumdisplay_list template end-->
+</div>
+<!--{hook/forumdisplay_bottom_mobile}-->
+<!--{subtemplate common/footer}-->

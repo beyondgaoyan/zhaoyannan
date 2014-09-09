@@ -1,0 +1,214 @@
+<!--{eval $needhiddenreply = ($hiddenreplies && $_G['uid'] != $post['authorid'] && $_G['uid'] != $_G['forum_thread']['authorid'] && !$post['first'] && !$_G['forum']['ismoderator']);}-->
+<!--{hook/viewthread_posttop_mobile $postcount}-->
+
+<div id="post_$post[pid]" class="vb{if !$post['first']} vc{else} notb{/if}"> 
+  <!--{if !$post['first']}--> 
+  <a href="home.php?mod=space&uid=$post['authorid']&do=profile" class="avatar"><!--{avatar($post['authorid'],small)}--></a> 
+  <!--{/if}--> 
+  <!--{if $post['first']}-->
+  <h1 class="vt_th"> <a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]">$_G[forum_thread][subject]</a> 
+    <!--{if $_G['forum_thread'][displayorder] == -2}--> <span>({lang moderating})</span> 
+    <!--{elseif $_G['forum_thread'][displayorder] == -3}--> <span>({lang have_ignored})</span> 
+    <!--{elseif $_G['forum_thread'][displayorder] == -4}--> <span>({lang draft})</span> 
+    <!--{/if}--> 
+  </h1>
+  <!--{/if}-->
+  
+  <div class="{if $post['first']}user_first{else}user{/if}"> 
+    
+    <!--{if !$_G[setting][mobile][mobilesimpletype] && $post['first']}--> 
+    <a href="home.php?mod=spacecp&ac=favorite&type=thread&id={$_G[tid]}" class="fav">{lang favorite}</a> 
+    <!--{/if}--> 
+    
+    <!--{if $post['authorid'] && $post['username'] && !$post['anonymous']}--> 
+    <a href="home.php?mod=space&uid=$post['authorid']&do=profile">$post[author]</a> 
+    <!--{if $_G['group']['allowbanuser']}--> 
+    <a href="forum.php?mod=modcp&action=member&op=ban&uid={$post[authorid]}" class="xi1">{lang ban_member}</a> 
+    <!--{/if}--> 
+    <!--{else}--> 
+    <!--{if !$post['authorid']}--> 
+    <a href="javascript:;">{lang guest} <em>$post[useip]</em></a> 
+    <!--{elseif $post['authorid'] && $post['username'] && $post['anonymous']}--> 
+    <!--{if $_G['forum']['ismoderator']}--> 
+    <a href="home.php?mod=space&uid=$post[authorid]">{lang anonymous}</a> 
+    <!--{else}--> 
+    {lang anonymous} 
+    <!--{/if}--> 
+    <!--{else}--> 
+    $post[author] <em>{lang member_deleted}</em> 
+    <!--{/if}--> 
+    <!--{/if}--> 
+    <!--{if $post['first']}--> 
+    {echo m_lang('pta')} 
+    <!--{/if}--> 
+    
+    <span class="p_dl"> 
+    <!--{if $post['authorid'] && !$post['anonymous']}--> 
+    <em id="authorposton$post[pid]"><!--{if $post['first']}-->{echo date('Y-m-d H:i',$post['dbdateline']);}<!--{else}-->{echo date('m-d H:i',$post['dbdateline']);}<!--{/if}--></em> 
+    <!--{elseif $post['authorid'] && $post['username'] && $post['anonymous']}--> 
+    
+    <em id="authorposton$post[pid]"><!--{if $post['first']}-->{echo date('Y-m-d H:i',$post['dbdateline']);}<!--{else}-->{echo date('m-d H:i',$post['dbdateline']);}<!--{/if}--></em> 
+    <!--{elseif !$post['authorid'] && !$post['username']}--> 
+    
+    <em id="authorposton$post[pid]"><!--{if $post['first']}-->{echo date('Y-m-d H:i',$post['dbdateline']);}<!--{else}-->{echo date('m-d H:i',$post['dbdateline']);}<!--{/if}--></em> 
+    <!--{/if}--> 
+    </span> 
+    
+    <!--{if !$post['first']}--><span class="p_nm y"><!--{if $post[authorid] == $_G[forum_thread][authorid] }-->{echo m_lang('lz')}<!--{else}--><!--{if !empty($postno[$post[number]])}-->$postno[$post[number]]<!--{else}--><em>{$post[number]}</em>#<!--{/if}--><!--{/if}--></span><!--{/if}--> 
+    
+  </div>
+  <div class="vbc{if !$post['first']} notb{/if}">
+    <div class="pbody{if !$post['first']} mbn{/if}"> 
+      <!--{if $post['warned']}--> 
+      <span class="y xi1">{lang warn_get}</span> 
+      <!--{/if}-->
+      <div class="mes"> 
+        <!--{if !$post['first'] && !empty($post[subject])}-->
+        <h2>$post[subject]</h2>
+        <!--{/if}--> 
+        <!--{if $_G['adminid'] != 1 && $_G['setting']['bannedmessages'] & 1 && (($post['authorid'] && !$post['username']) || ($post['groupid'] == 4 || $post['groupid'] == 5) || $post['status'] == -1 || $post['memberstatus'])}-->
+        <div class="xi1">{lang message_banned}</div>
+        <!--{elseif $_G['adminid'] != 1 && $post['status'] & 1}-->
+        <div class="xi1">{lang message_single_banned}</div>
+        <!--{elseif $needhiddenreply}-->
+        <div class="xi1">{lang message_ishidden_hiddenreplies}</div>
+        <!--{elseif $post['first'] && $_G['forum_threadpay']}--> 
+        <!--{template forum/viewthread_pay}--> 
+        <!--{else}--> 
+        
+        <!--{if $_G['setting']['bannedmessages'] & 1 && (($post['authorid'] && !$post['username']) || ($post['groupid'] == 4 || $post['groupid'] == 5))}-->
+        <div class="xi1">{lang admin_message_banned}</div>
+        <!--{elseif $post['status'] & 1}-->
+        <div class="xi1">{lang admin_message_single_banned}</div>
+        <!--{/if}--> 
+        <!--{if $_G['forum_thread']['price'] > 0 && $_G['forum_thread']['special'] == 0}--> 
+        {lang pay_threads}: <strong>$_G[forum_thread][price] {$_G['setting']['extcredits'][$_G['setting']['creditstransextra'][1]][unit]}{$_G['setting']['extcredits'][$_G['setting']['creditstransextra'][1]][title]} </strong> <a href="forum.php?mod=misc&action=viewpayments&tid=$_G[tid]" >{lang pay_view}</a> 
+        <!--{/if}--> 
+        
+        <!--{if $post['first'] && $threadsort && $threadsortshow}--> 
+        <!--{if $threadsortshow['optionlist'] && !($post['status'] & 1) && !$_G['forum_threadpay']}--> 
+        <!--{if $threadsortshow['optionlist'] == 'expire'}--> 
+        {lang has_expired} 
+        <!--{else}-->
+        <div class="box box_ex2 viewsort">
+          <h4>$_G[forum][threadsorts][types][$_G[forum_thread][sortid]]</h4>
+          <!--{loop $threadsortshow['optionlist'] $option}--> 
+          <!--{if $option['type'] != 'info'}--> 
+          $option[title]: <!--{if $option['value']}-->$option[value] $option[unit]<!--{else}--><span class="xg1">--</span><!--{/if}--><br />
+          <!--{/if}--> 
+          <!--{/loop}--> 
+        </div>
+        <!--{/if}--> 
+        <!--{/if}--> 
+        <!--{/if}--> 
+        
+        <!--{if $post['first']}--> 
+        <!--{if !$_G[forum_thread][special]}-->
+        <div id="postmessage_$post[pid]" class="postmessage">$post[message]</div>
+        <!--{elseif $_G[forum_thread][special] == 1}--> 
+        <!--{template forum/viewthread_poll}--> 
+        <!--{elseif $_G[forum_thread][special] == 2}--> 
+        <!--{template forum/viewthread_trade}--> 
+        <!--{elseif $_G[forum_thread][special] == 3}--> 
+        <!--{template forum/viewthread_reward}--> 
+        <!--{elseif $_G[forum_thread][special] == 4}--> 
+        <!--{template forum/viewthread_activity}--> 
+        <!--{elseif $_G[forum_thread][special] == 5}--> 
+        <!--{template forum/viewthread_debate}--> 
+        <!--{elseif $threadplughtml}--> 
+        $threadplughtml
+        <div id="postmessage_$post[pid]" class="postmessage">$post[message]</div>
+        <!--{else}-->
+        <div id="postmessage_$post[pid]" class="postmessage">$post[message]</div>
+        <!--{/if}--> 
+        <!--{else}-->
+        <div id="postmessage_$post[pid]" class="postmessage">$post[message]</div>
+        <!--{/if}--> 
+        
+        <!--{if $post['first'] && ($post[tags] || $relatedkeywords) && $_GET['from'] != 'preview'}-->
+        <div class="tags"> 
+          <!--{if $post[tags]}--> 
+          <!--{eval $tagi = 0;}--> 
+          <!--{loop $post[tags] $var}--> 
+          <!--{if $tagi}-->, <!--{/if}--><a title="$var[1]" href="misc.php?mod=tag&id=$var[0]" target="_blank">$var[1]</a> 
+          <!--{eval $tagi++;}--> 
+          <!--{/loop}--> 
+          <!--{/if}--> 
+        </div>
+        <!--{/if}--> 
+        
+        <!--{if $post['relateitem'] && $post['first']}-->
+        <div class="relateitem">
+          <h3>{lang related_thread}:</h3>
+          <ul>
+            <!--{eval $rel = 0;}--> 
+            <!--{loop $post['relateitem'] $var}--> 
+            <!--{if $rel < $relateitems}-->
+            <li{if $rel == 0} style="border-top-color:#fff;"{/if}><a href="forum.php?mod=viewthread&tid=$var[tid]">{echo cutstr(strip_tags($var[subject]),38)}</a></li>
+            <!--{/if}--> 
+            <!--{eval $rel++;}--> 
+            <!--{/loop}-->
+          </ul>
+        </div>
+        <!--{/if}--> 
+        
+        <!--{if $post['attachment']}-->
+        <div class="warning"> {lang attachment}: <em><!--{if $_G['uid']}-->{lang attach_nopermission}<!--{else}-->{lang attach_nopermission_login}<!--{/if}--></em> </div>
+        <!--{elseif $post['imagelist'] || $post['attachlist']}--> 
+        
+        <!--{if $post['imagelist']}--> 
+        {echo showattach($post, 1)} 
+        <!--{/if}--> 
+        <!--{if $post['attachlist']}--> 
+        {echo showattach($post)} 
+        <!--{/if}--> 
+        <!--{/if}--> 
+        <!--{/if}--> 
+      </div>
+    </div>
+    
+    <!--{block fastreply}--> 
+    <!--{if $allowpostreply}--> 
+    <!--{if $post['first']}--> 
+    <a href="forum.php?mod=post&action=reply&fid=$_G[fid]&tid=$_G[tid]&reppost=$post[pid]&page=$page">{lang reply}</a> 
+    <!--{else}--> 
+    <a href="forum.php?mod=post&action=reply&fid=$_G[fid]&tid=$_G[tid]&repquote=$post[pid]&page=$page">{lang reply}</a> 
+    <!--{/if}--> 
+    <!--{else}--> 
+    <!--{if $_G['uid'] && $allowpostreply}--> 
+    <!--{if $post['first']}--> 
+    <a href="forum.php?mod=post&action=reply&fid=$_G[fid]&tid=$_G[tid]&reppost=$post[pid]&page=$page">{lang reply}</a> 
+    <!--{else}--> 
+    <a href="forum.php?mod=post&action=reply&fid=$_G[fid]&tid=$_G[tid]&repquote=$post[pid]&page=$page">{lang reply}</a> 
+    <!--{/if}--> 
+    <!--{/if}--> 
+    <!--{/if}--> 
+    <!--{/block}--> 
+    <!--{block modeditpost}--> 
+    <!--{if (($_G['forum']['ismoderator'] && $_G['group']['alloweditpost'] && (!in_array($post['adminid'], array(1, 2, 3)) || $_G['adminid'] <= $post['adminid'])) || ($_G['forum']['alloweditpost'] && $_G['uid'] && $post['authorid'] == $_G['uid']))}--> 
+    <!--{if $_G['forum_thread']['special'] != 2 || $_G['forum_thread']['special'] != 4 || !$post['first']}--><a class="editp" href="forum.php?mod=post&action=edit&fid=$_G[fid]&tid=$_G[tid]&pid=$post[pid]<!--{if $_G[forum_thread][sortid]}--><!--{if $post[first]}-->&sortid={$_G[forum_thread][sortid]}<!--{/if}--><!--{/if}-->{if !empty($_GET[modthreadkey])}&modthreadkey=$_GET[modthreadkey]{/if}&page=$page">{lang edit}</a><!--{/if}--> 
+    <!--{/if}--> 
+    <!--{/block}--> 
+    <!--{block modmanage}--> 
+    <!--{if !$post['first'] && $_G['forum']['ismoderator']}--> 
+    <!--{if $_G['group']['allowwarnpost']}--><a href="forum.php?mod=topicadmin&action=warn&fid={$_G[fid]}&tid={$_G[tid]}&operation=&optgroup=&page=&topiclist[]={$post[pid]}{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang modmenu_warn}</a><span class="pipe">|</span><!--{/if}--><!--{if $_G['group']['allowbanpost']}--><a href="forum.php?mod=topicadmin&action=banpost&fid={$_G[fid]}&tid={$_G[tid]}&operation=&optgroup=&page=&topiclist[]={$post[pid]}{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang modmenu_banpost}</a><span class="pipe">|</span><!--{/if}--><!--{if $_G['group']['allowdelpost']}--><a href="forum.php?mod=topicadmin&action=delpost&fid={$_G[fid]}&tid={$_G[tid]}&operation=&optgroup=&page=&topiclist[]={$post[pid]}{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang modmenu_deletepost}</a><!--{/if}--> 
+    <!--{/if}--> 
+    <!--{/block}--> 
+    
+    <!--{if $post['first']}--><!--{$adviewt}--><!--{/if}--> 
+    
+    <!--{if trim($fastreply) || trim($modeditpost) || trim($modmanage)}-->
+    <div class="vtrim"> $fastreply  
+      $modeditpost <span> 
+      <!--{if $_G['forum']['ismoderator'] && $post['first']}--> 
+      <a href="forum.php?mod=topicadmin&action=warn&fid={$_G[fid]}&tid={$_G[tid]}&topiclist[]={$_G[forum_firstpid]}{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang topicadmin_warn_add}</a> <a href="forum.php?mod=topicadmin&action=banpost&fid={$_G[fid]}&tid={$_G[tid]}&topiclist[]={$_G[forum_firstpid]}{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang admin_banpost}</a> <a href="forum.php?mod=topicadmin&action=moderate&fid={$_G[fid]}&moderate[]={$_G[tid]}&operation=delete&optgroup=3&from={$_G[tid]}{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang delete}</a> <a href="forum.php?mod=topicadmin&action=moderate&fid={$_G[fid]}&moderate[]={$_G[tid]}&from={$_G[tid]}&optgroup=4{if $_G['setting']['version'] == 'X3'}&mobile=yes{/if}">{lang close}</a> </span> 
+      <!--{/if}--> 
+      <!--{if trim($modmanage)}--><span>$modmanage</span><!--{/if}--> 
+    </div>
+    <!--{/if}--> 
+    
+    <!--// postslist end--> 
+  </div>
+</div>
+<!--{if $post['first']}--><!--{$mshare}--><!--{/if}--> 
+<!--{hook/viewthread_postbottom_mobile $postcount}--> 

@@ -1,0 +1,100 @@
+<!--{subtemplate common/header}-->
+<div class="ct">
+<div class="pt"><a href="forum.php">{echo m_lang('home')}</a> <em> &gt; </em> {lang memcp_profile}</div> 
+
+<div class="bm" style="position:relative;">
+<div class="p_avatar"><!--{avatar($space[uid],middle)}--></div>   
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="p_table">
+        
+    <tr>
+        <th align="left" valign="top" class="xi2" colspan="2" >{lang basic_information}</th>
+    </tr>
+    
+    <tr>
+        <td width="35%" valign="top">{lang username}: </td>
+        <td width="65%">{$space[username]}<!--{if $space[uid] != $_G[uid]}--><span class="pipe">|</span> <a href="home.php?mod=spacecp&ac=pm&touid={$space[uid]}" class="xi2">{lang send_pm}</a><!--{/if}-->
+				<span class="pipe">|</span>
+                <!--{if !$isfriend}-->
+				<a href="home.php?mod=spacecp&ac=friend&op=add&uid=$space[uid]&handlekey=addfriendhk_{$space[uid]}" class="xi2">{lang add_friend}</a>
+				<!--{else}-->
+				<a href="home.php?mod=spacecp&ac=friend&op=ignore&uid=$space[uid]&handlekey=ignorefriendhk_{$space[uid]}" class="xi2">{lang ignore_friend}</a>
+				<!--{/if}-->        
+        <!--{if $_G['group']['allowbanuser']}--><span class="pipe">|</span> <a href="forum.php?mod=modcp&action=member&op=ban&uid={$space[uid]}" class="xi1">{lang ban_member}</a><!--{/if}--></td>
+    </tr>   
+    <tr>
+        <td valign="top">UID: </td>
+        <td>{$space[uid]}</td>
+    </tr>
+    
+    <!--{if in_array($_G[adminid], array(1, 2))}-->
+      <tr>
+        <td valign="top">Email: </td>
+        <td>$space[email]</td>
+      </tr>
+      <!--{/if}-->
+    <tr>
+        <td valign="top">{lang space_visits}: </td>
+        <td><strong class="xi1">$space[views]</strong></td>
+    </tr>       
+      <tr>
+        <td valign="top">{lang stat_info}: </td>
+        <td class="info">		
+			<p><a href="{if CURMODULE != 'follow'}home.php?mod=space&uid=$space[uid]&do=thread&view=me&type=thread&from=space{else}home.php?mod=space&uid=$space[uid]&view=thread{/if}" class="xi2" >{lang threads_num}&nbsp; $space[threads]</a></p>
+			<p><a href="{if CURMODULE != 'follow'}home.php?mod=space&uid=$space[uid]&do=thread&view=me&type=reply&from=space{else}home.php?mod=space&uid=$space[uid]&view=thread&type=reply{/if}" class="xi2" >{lang replay_num}&nbsp; $space[posts]</a></p>
+            <p>{lang friends_num}&nbsp; $space[friends]</p>            
+            <p>{lang doings_num}&nbsp; $space[doings]</p>            
+            <p>{lang blogs_num}&nbsp; $space[blogs]</p>
+            <p>{lang albums_num}&nbsp; $space[albums]</p>
+        </td>
+   	  </tr>     
+      	<!--{loop $profiles $value}-->
+        <tr>
+        <td valign="top">$value[title]: </td>
+        <td>$value[value]</td>
+  		</tr>
+    	<!--{/loop}-->
+        
+        <tr>
+        	<th align="left" valign="top" class="xi2" colspan="2" >{lang active_profile}</th>            
+        </tr>
+        <!--{if $space[adminid]}-->
+        <tr>
+            <td >{lang management_team}: </td>
+            <td>{$space[admingroup][grouptitle]} {$space[admingroup][icon]}</td>
+        </tr>
+        <!--{/if}-->
+		<tr>
+        	<td >{lang usergroup}: </td><td>{$space[group][grouptitle]}{$space[group][icon]}</td>
+		</tr>
+        <!--{if $space[extgroupids]}-->
+        <tr>
+        	<td valign="top">{lang group_expiry_type_ext}: </td><td>$space[extgroupids]</td>
+        </tr>
+        <!--{/if}-->
+        <tr>
+        	<td valign="top" >{lang online_time}: </td><td>$space[oltime] {lang hours}</td>
+        <tr>
+        	<td valign="top" >{lang regdate}: </td><td>$space[regdate]</td>
+        <tr>
+        	<td valign="top" >{lang last_visit}: </td><td>$space[lastvisit]</td>
+        <!--{if $_G[uid] == $space[uid] || $_G[group][allowviewip]}-->
+        <tr>
+        	<td valign="top" >{lang register_ip}: </td><td>$space[regip] - $space[regip_loc]</td>
+        <tr>
+        	<td valign="top" >{lang last_visit_ip}: </td><td>$space[lastip] - $space[lastip_loc]</td>
+        <!--{/if}-->
+        <tr>
+        	<td valign="top" >{lang last_activity_time}: </td><td>$space[lastactivity]</td>
+        <tr>
+        	<td valign="top" >{lang last_post_time}: </td><td>$space[lastpost]</td>
+        <tr>
+        	<td valign="top" >{lang last_send_email}: </td><td>$space[lastsendmail]</td>
+        <tr>
+        	<td valign="top" >{lang time_offset}: </td><td>
+            <!--{eval $timeoffset = array({lang timezone});}-->
+            $timeoffset[$space[timeoffset]]
+        </td>
+</table>
+</div>
+</div>
+<!--{subtemplate common/footer}-->

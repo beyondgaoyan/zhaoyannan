@@ -1,0 +1,122 @@
+        <!--{if $picstyle == 1}-->
+         <div id="threadlist">
+         
+          <ul id="waterfall" class="waterfall">
+          <!--{eval require_once('./mplus/mobilelist.php');}-->
+          <!--{eval $i=1;}-->
+          <!--{loop $manylist $o}-->
+          <li>
+          <a href="forum.php?mod=viewthread&tid=$o[tid]"><img src="{$m_picurl}?tid=$o[tid]" /></a>
+          </li>
+          <!--{eval $i++;}-->
+          <!--{/loop}-->
+          </ul>
+	                    <div id="tmppic" style="display: none;"></div>
+						<script type="text/javascript" src="./mplus/js/redef.js?{VERHASH}"></script>
+						<script type="text/javascript" reload="1">
+						var wf = {};
+
+						_attachEvent(window, "load", function () {
+							if($("waterfall")) {
+								wf = waterfall();
+							}
+
+							<!--{if $_G['page'] < $_G['page_next'] && !$subforumonly}-->
+								var page = $_G['page'] + 1,
+									maxpage = $_G['page'] + 40,
+									stopload = 0,
+									scrolltimer = null,
+									tmpelems = [],
+									tmpimgs = [],
+									markloaded = [],
+									imgsloaded = 0,
+									loadready = 0,
+									showready = 1,
+									nxtpgurl = 'forum.php?mod=pic&page=',
+									wfloading = "<img src=\"./mplus/img/load.gif\" alt=\"\" width=\"10\" height=\"10\" /> {echo m_lang('load_pic')}",
+									pgbtn = $("pgbtn").getElementsByTagName("a")[0];
+
+								function loadmore() {
+									var url = nxtpgurl + page + '&t=' + parseInt((+new Date()/1000)/(Math.random()*1000));
+									var x = new Ajax("HTML");
+									x.get(url, function (s) {
+										s = s.replace(/\n|\r/g, "");
+										if(s.indexOf("id=\"pgbtn\"") == -1) {
+											$("pgbtn").style.display = "none";
+											stopload++;
+											window.onscroll = null;
+										}
+
+										s = s.substring(s.indexOf("<ul id=\"waterfall\""), s.indexOf("<div id=\"tmppic\""));
+										s = s.replace("id=\"waterfall\"", "");
+										$("tmppic").innerHTML = s;
+										loadready = 1;
+									});
+								}
+
+								window.onscroll = function () {
+									if(scrolltimer == null) {
+										scrolltimer = setTimeout(function () {
+											try {
+												if(page < maxpage && stopload < 2 && showready && ((document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.clientHeight + 500) >= document.documentElement.scrollHeight) {
+													pgbtn.innerHTML = wfloading;
+													loadready = 0;
+													showready = 0;
+													loadmore();
+													tmpelems = $("tmppic").getElementsByTagName("li");
+													var waitingtimer = setInterval(function () {
+														stopload >= 2 && clearInterval(waitingtimer);
+														if(loadready && stopload < 2) {
+															if(!tmpelems.length) {
+																page++;
+																pgbtn.href = nxtpgurl + page;
+																pgbtn.innerHTML = "{echo m_lang('next')}";
+																showready = 1;
+																clearInterval(waitingtimer);
+															}
+															for(var i = 0, j = tmpelems.length; i < j; i++) {
+																if(tmpelems[i]) {
+																	tmpimgs = tmpelems[i].getElementsByTagName("img");
+																	imgsloaded = 0;
+																	for(var m = 0, n = tmpimgs.length; m < n; m++) {
+																		tmpimgs[m].onerror = function () {
+																			this.style.display = "none";
+																		};
+																		markloaded[m] = tmpimgs[m].complete ? 1 : 0;
+																		imgsloaded += markloaded[m];
+																	}
+																	if(imgsloaded == tmpimgs.length) {
+																		$("waterfall").appendChild(tmpelems[i]);
+																		wf = waterfall({
+																			"index": wf.index,
+																			"totalwidth": wf.totalwidth,
+																			"totalheight": wf.totalheight,
+																			"columnsheight": wf.columnsheight
+																		});
+																	}
+																}
+															}
+														}
+													}, 40);
+												}
+											} catch(e) {}
+											scrolltimer = null;
+										}, 320);
+									}
+								};
+							<!--{/if}-->
+
+						});
+
+						</script>
+
+		<!--{eval $nextpage = $_G['page'] + 1; $thispage = $allnum / $m_num}-->
+        <!--{if $_G['page'] < $thispage}-->
+        <div id="pgbtn" class="a_pg">
+        <a href="forum.php?mod=pic&page=$nextpage">{echo m_lang('next')}</a>
+        </div>
+        <!--{/if}-->
+</div>
+<!--{else}-->
+<!--{eval header("location: forum.php"); }-->
+<!--{/if}-->

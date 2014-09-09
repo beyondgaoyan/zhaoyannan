@@ -1,0 +1,78 @@
+<!--{template common/header}-->
+<!--{if $tagname}-->
+
+<div class="ct">
+  <div class="pt"> <a href="forum.php?mod=forum">{echo m_lang('forum')}</a> <em> &gt; </em> <a href="misc.php?mod=tag">{lang tag}</a> 
+    <!--{if $tagname}--> 
+    <em> &gt; </em> <a href="misc.php?mod=tag&id=$id">$tagname</a> 
+    <!--{/if}--> 
+    <!--{if $showtype == 'thread'}--> 
+    <em> &gt; </em> {lang related_thread} 
+    <!--{/if}--> 
+    <!--{if $showtype == 'blog'}--> 
+    <em> &gt; </em> {lang related_blog} 
+    <!--{/if}--> 
+  </div>
+  
+  <!--{if empty($showtype) || $showtype == 'thread'}--> 
+  
+  <!--{if $threadlist}-->
+  <ul id="alist" class="thlist">
+    <!--{loop $threadlist $thread}-->
+    <li> <a href="forum.php?mod=viewthread&tid=$thread[tid]">
+      <h1> 
+        <!--{if $thread[folder] == 'lock'}--> 
+        <img src="./mplus/img/l1.png" height="15" /> 
+        <!--{elseif $thread['special'] == 1}--> 
+        <img src="./mplus/img/p1.png" height="15" /> 
+        <!--{elseif $thread['special'] == 2}--> 
+        <img src="./mplus/img/t1.png" height="15" /> 
+        <!--{elseif $thread['special'] == 3}--> 
+        <img src="./mplus/img/r1.png" height="15" /> 
+        <!--{elseif $thread['special'] == 4}--> 
+        <img src="./mplus/img/a1.png" height="15" /> 
+        <!--{elseif $thread['special'] == 5}--> 
+        <img src="./mplus/img/d1.png" height="15" /> 
+        <!--{elseif in_array($thread['displayorder'], array(1, 2, 3, 4))}--> 
+        <img src="./mplus/img/p_1.png" height="15" /> 
+        <!--{else}--> 
+        <!--{/if}--> 
+        {$thread[subject]} </h1>
+      <p> 
+        <!--{if $thread['authorid'] && $thread['author']}--> 
+        {$thread[author]}<!--{else}--><!--{if $_G['forum']['ismoderator']}-->{lang anonymous}<!--{else}-->{$_G[setting][anonymoustext]}<!--{/if}--><!--{/if}--><span class="pipe">-</span>{$thread[dateline]} <span class="replies"><!--{if $thread[replies] > 0}-->{$thread[replies]}<!--{else}-->0<!--{/if}--></span></p>
+      </a> </li>
+    <!--{/loop}-->
+  </ul>
+  <!--{if empty($showtype)}-->
+  <div class="a_pg"><a href="misc.php?mod=tag&id=$id&type=thread">{lang more}...</a></div>
+  <!--{else}--> 
+  <!--{if $multipage}-->
+  <div class="pgbox">$multipage</div>
+  <!--{/if}--> 
+  <!--{/if}--> 
+  <!--{else}-->
+  <div class="wmt">{lang no_content}</div>
+  <!--{/if}--> 
+  
+  <!--{/if}--> 
+  
+</div>
+<!--{else}-->
+
+<div class="ct">
+  <div class="pt"> <a href="forum.php?mod=forum">{echo m_lang('forum')}</a> <em> &gt; </em> <a href="misc.php?mod=tag">{lang tag}</a> </div>
+  <div class="bm">
+    <div class="bm_c nobb">
+      <form method="post" action="misc.php?mod=tag" class="pns">
+        <input type="text" name="name" style=" line-height:26px; height:28px; padding:0px 4px;" size="30" />
+        &nbsp;
+        <button type="submit" style=" height:30px; padding:0px;" ><em>{lang search}</em></button>
+      </form>
+    </div>
+  </div>
+  <div class="wmt notb">{lang empty_tags}</div>
+</div>
+
+<!--{/if}--> 
+<!--{template common/footer}-->

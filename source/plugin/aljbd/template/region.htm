@@ -1,0 +1,62 @@
+
+<form id="cpform" action="admin.php?action=plugins&operation=config&do={$_GET['do']}&identifier=aljbd&pmod=region" target="_self" method="post" name="cpform">
+<input type="hidden" value="{FORMHASH}" name="formhash">
+<input type="hidden" value="{$_GET['upid']}" name="upid">
+<table style="width:1050px;" class="tb tb2 ">
+<tbody><tr class="header"><th></th><th>地区:<a href="admin.php?action=plugins&operation=config&do={$_GET['_do']}&identifier=aljbd&pmod=region&upid=$upid_data['upid']">$upid_data['name']</a></th><th></th></tr><tr><td><script>function newregion() {var anew = $("#newfirst").clone();anew.find("input").attr("value", "");$("#newfirst").after(anew);$("#newfirst").find("a").remove();$("#newfirst").attr("id", "");return false;}</script></td></tr>
+<!--{loop $region $key $value}-->
+<tr class="hover" style="height:20px"><td class="td25"><input type="checkbox" value="$value['catid']" name="delete[]" class="checkbox"></td><td class="td24"><input type="text" value="$value[name]" name="name[{$value[catid]}]" size="15" onfocus="this.className='txt'" onblur="this.className='txtnobd'" class="txtnobd"></td><td><a href="admin.php?action=plugins&operation=config&do={$_GET['_do']}&identifier=aljbd&pmod=region&upid={$value[catid]}">编辑</a></td></tr>
+<!--{/loop}-->
+<tr class="hover" style="height:20px" id="newfirst"><td class="td25">新增</td><td class="td24"><input type="text" value="" name="newregion[]" class="txt"></td><td><a onclick="newregion();return false;" href="#">+</a></td></tr>
+<tr><td class="td25"><input type="checkbox" onclick="checkall(this.form, 'delete')" class="checkbox" id="chkall" name="chkall"><label for="chkall">删？</label></td><td colspan="15"><div class="fixsel"><div id="ajax_status_display"></div><input type="submit" value="提交" title="{lang aljbd:s114}" name="submit" id="submit_submit" class="btn"></div></td></tr></tbody></table>
+<script type="text/javasript" src="source/plugin/aljbd/js/jquery.js"></script>
+
+</form>
+<script>
+$(function() {
+var selectlength = 1;
+var curselect = 0;
+function selectcatid(obj, value) {
+curselect = obj.id.split("_")[1];
+formatselector();
+if(value == -1) {
+setname();
+return false;
+}
+var ops = $(obj).find("option");
+for(var i=0;i<ops.length;i++) {
+if(ops[i].value == value) {
+if($(ops[i]).attr("havechild") == 0) {
+setname();
+return false;
+}
+}
+}
+$.get("misc.php?ac=region&upid="+value, function(data){changeselector(data)});
+return false;
+}
+function changeselector(newdata) {
+selectlength = $("#regiondiv select").length;
+var newregion = $("<select id=\"selector_"+selectlength+"\"></select>");
+newregion.append("<option value=\"-1\">{lang aljbd:s115}</option>"+newdata);
+$("#selector_"+curselect).after(newregion);
+selectlength = $("#regiondiv select").length;
+newregion.bind("change", function(){selectcatid(this,this.value);});
+setname();
+}
+function formatselector() {
+var selects = $("#regiondiv select");
+for(var i=0;i<selects.length;i++) {
+if(selects[i].id.split("_")[1] > curselect) {
+$(selects[i]).remove();
+}
+$(selects[i]).attr("name", "");
+}
+}
+function setname() {
+var cselect = $("#regiondiv select").last();
+cselect.attr("name", "region");
+}
+$("#regiondiv select").bind("change", function(){selectcatid(this,this.value);});
+});
+</script> 

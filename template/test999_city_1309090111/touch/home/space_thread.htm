@@ -1,0 +1,48 @@
+<!--{subtemplate common/header}-->
+<div class="ct"> 
+<div class="pt"><a href="forum.php">{echo m_lang('home')}</a> <em> &gt; </em> {$space[username]}<!--{if $viewtype == 'reply' || $viewtype == 'postcomment'}--> {echo m_lang('de')}{echo m_lang('reply')}<!--{else}--> {echo m_lang('de')}{echo m_lang('thread')}<!--{/if}--></div>
+<div class="mmt">
+<a href="{if CURMODULE != 'follow'}home.php?mod=space&uid=$space[uid]&do=thread&view=me&type=thread&from=space{else}home.php?mod=space&uid=$space[uid]&view=thread{/if}"{if $viewtype == 'reply' || $viewtype == 'postcomment'}{else} class="a"{/if}>{echo m_lang('thread')}</a>
+<a href="{if CURMODULE != 'follow'}home.php?mod=space&uid=$space[uid]&do=thread&view=me&type=reply&from=space{else}home.php?mod=space&uid=$space[uid]&view=thread&type=reply{/if}"{if $viewtype == 'reply' || $viewtype == 'postcomment'} class="a"{/if}>{echo m_lang('reply')}</a>
+</div>
+
+<div class="bm">
+	<form method="post" autocomplete="off" name="delform" id="delform" action="home.php?mod=space&do=thread&view=all&order=dateline" onsubmit="showDialog('{lang del_select_thread_confirm}', 'confirm', '', '$(\'delform\').submit();'); return false;">
+        <input type="hidden" name="formhash" value="{FORMHASH}" />
+        <input type="hidden" name="delthread" value="true" />
+        <!--{if $list}-->
+        
+            <!--{loop $list $stid $thread}-->
+            	<div class="bm_c">
+                    <!--{if $viewtype == 'reply' || $viewtype == 'postcomment'}-->
+                        <a href="forum.php?mod=redirect&goto=findpost&ptid=$thread[tid]&pid=$thread[pid]" class="xs1">$thread[subject]</a> 
+							<!--{eval $i=1;}-->
+                            <!--{loop $tids[$stid] $pid}-->
+							<!--{eval $post = $posts[$pid];}-->
+                            <p class="tls{if $i == 1} bt mtn{/if}">
+                          <!--{if $post[message]}-->{$post[message]}<!--{else}-->......<!--{/if}-->
+                            </p>
+                            <!--{eval $i++;}-->
+							<!--{/loop}-->                        
+                    <!--{else}-->
+                        <a href="forum.php?mod=viewthread&tid=$thread[tid]" class="xs1">$thread[subject]</a>
+                    <!--{/if}-->
+                <!--{if $viewtype != 'postcomment'}-->
+                    <!--{if !$actives[me]}-->
+                    <a href="home.php?mod=space&uid=$thread[authorid]">$thread[author]</a>$thread[dateline]
+                    <!--{/if}-->
+                    <p class="ptm xg1 xs2">{lang forum_posts} $thread[replies] &nbsp;&nbsp; {lang forum_views} $thread[views]</p>
+                <!--{/if}-->
+            </div>
+            <!--{/loop}-->
+        <!--{else}-->
+        	<div class="bm_c">
+            {lang no_related_posts}
+            </div>
+        <!--{/if}-->
+        </table>
+    </form>
+</div>
+<!--{if $multi}--><div class="pgbox">$multi</div><!--{/if}-->
+</div>
+<!--{subtemplate common/footer}-->

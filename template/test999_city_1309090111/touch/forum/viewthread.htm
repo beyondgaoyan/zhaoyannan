@@ -1,0 +1,151 @@
+<!--{subtemplate common/header}-->
+<!--{if $_G['setting']['version'] != 'X2'}--><!--{if helper_access::check_module('follow')}-->
+<!--{if $_G['forum']['fid'] == $follows }--><!--{eval header("location: home.php?mod=follow"); }--><!--{/if}-->
+<!--{/if}--><!--{/if}-->
+<!--{hook/viewthread_top_mobile}-->
+
+<div class="vt">
+  
+<div class="pt">
+<!--{if $_G['forum']['type'] == 'forum'}-->
+<!--{if $ctstyle == 1}-->
+<a href="forum.php?mod=forum">{echo m_lang('forum')}</a>
+<!--{else}-->
+<a href="forum.php">{echo m_lang('home')}</a>
+<!--{/if}-->
+ <em> &gt; </em> <a href="forum.php?mod=forumdisplay&fid=$_G[fid]">{echo cutstr(strip_tags($_G['forum']['name']),20)}</a>
+<!--{else}-->
+<!--{if $ctstyle == 1}-->
+<a href="forum.php?mod=forum">{echo m_lang('forum')}</a>
+<!--{else}-->
+<a href="forum.php">{echo m_lang('home')}</a>
+<!--{/if}-->
+ <em> &gt; </em> <a href="$upnavlink">{echo cutstr(strip_tags($_G['forum']['name']),20)}</a>
+<!--{/if}-->
+
+<a href="{if $_G['group']['allowpost']}forum.php?mod=post&action=newthread&fid=$_G[fid]{else}{if $_G['uid']}forum.php?mod=post&action=newthread&fid=$_G[fid]{else}member.php?mod=logging&action=login{/if}{/if}" class="y v_pst" >{lang send_threads}</a>
+
+</div>
+  
+    <!--{if $pagestyle == 1}-->
+    <!--{if $_GET['threads'] == 'thread'}-->
+   
+    <!--{eval $postcount = 0;}-->
+    <!--{loop $postlist $post}-->
+    <!--{if $post['first']}-->
+    <div class="ct"><!--{subtemplate forum/viewthread_node}--></div>
+    <!--{/if}-->
+    <!--{eval $postcount++;}-->
+    <!--{/loop}-->
+    
+    <!--{if $_G[forum_thread][replies] > 0}-->
+    <div class="ct">
+    
+    <div class="titls">    
+	<!--{if $ordertype != 1}-->
+	<a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]&ordertype=1&threads=thread" class="xi2">{lang post_descview}</a>
+	<!--{else}-->
+	<a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]&ordertype=2&threads=thread" class="xi2">{lang post_ascview}</a>
+	<!--{/if}-->    
+    <span class="y">{echo m_lang('tt')}{$_G[forum_thread][replies]}{echo m_lang('od')}{echo m_lang('reply')}</span>
+    </div>
+    
+    <div id="alist">
+    <!--{eval $postcount = 0;}-->
+    <!--{loop $postlist $post}-->
+    <!--{if !$post['first']}--><!--{subtemplate forum/viewthread_node}--><!--{/if}-->
+    <!--{eval $postcount++;}-->
+    <!--{/loop}-->    
+    </div>    
+    
+<!--{if $_G['forum_thread']['replies'] > $_G['ppp']}-->
+<div id="ajaxshow"></div>     
+<script type="text/javascript">
+var page=$_G['page'];
+var allpage={echo $thispage = ceil($_G['forum_thread']['replies'] / $_G['ppp']);};
+function ajaxpage(url){
+						$("ajaxld").style.display='block';
+						$("ajnt").style.display='none';
+						var x = new Ajax("HTML");
+						page++;
+						url=url+'&page='+page;
+						x.get(url, function (s) {
+							s = s.replace(/\\n|\\r/g, "");//alert(s);
+							s = s.substring(s.indexOf("<div id=\"alist\""), s.indexOf("<div id=\"ajaxshow\"></div>"));//alert(s);
+							$('ajaxshow').innerHTML+=s;
+							$("ajaxld").style.display='none';							
+						if(page==allpage){
+							$("ajnt").style.display='none';
+						}else{
+							$("ajnt").style.display='block';
+						}							
+						});
+
+						return false;
+}
+</script>
+<div class="a_pg" id="a_pg"> 
+<div id="ajaxld"><img src="./mplus/img/load.gif" /> {echo m_lang('load_pic')}</div>
+<div id="ajnt"><a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]&ordertype={if $ordertype != 1}2{else}1{/if}&threads=thread" onclick="return ajaxpage(this.href);">{echo m_lang('load')}</a></div>
+</div>  
+<!--{/if}-->
+</div>
+<!--{/if}-->
+
+<!--{else}-->
+<!--{eval header("location: forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]&ordertype=$otstyle&threads=thread"); }-->
+<!--{/if}-->
+
+<!--{else}-->
+
+    <!--{eval $postcount = 0;}-->
+    <!--{loop $postlist $post}-->
+    <!--{if $post['first']}-->
+    <div class="ct"><!--{subtemplate forum/viewthread_node}--></div>
+    <!--{/if}-->
+    <!--{eval $postcount++;}-->
+    <!--{/loop}-->
+    
+    <!--{if $_G[forum_thread][replies] > 0}-->
+    <div class="ct">
+    
+    <div class="titls">
+    <!--{if $_G['page'] > 1}-->
+    <a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]" class="xi2">&laquo;{echo m_lang('tthread')}</a>
+    <!--{else}-->    
+	<!--{if $ordertype != 1}-->
+	<a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]&ordertype=1" class="xi2">{lang post_descview}</a>
+	<!--{else}-->
+	<a href="forum.php?mod=viewthread&tid=$_G[tid]&extra=$_GET[extra]&ordertype=2" class="xi2">{lang post_ascview}</a>
+	<!--{/if}--> 
+    <!--{/if}-->   
+    <span class="y">{echo m_lang('tt')}{$_G[forum_thread][replies]}{echo m_lang('od')}{echo m_lang('reply')}</span>
+    </div>
+
+    <!--{eval $postcount = 0;}-->
+    <!--{loop $postlist $post}-->
+    <!--{if !$post['first']}--><!--{subtemplate forum/viewthread_node}--><!--{/if}-->
+    <!--{eval $postcount++;}-->
+    <!--{/loop}-->
+<div class="pgbox">$multipage</div>
+</div>
+<!--{/if}-->
+
+<!--{/if}-->
+       
+    </div>
+
+<!--{if $allowpostreply}-->
+<!--{subtemplate forum/forumdisplay_fastpost}-->
+<!--{else}-->
+<!--{if $_G['uid'] && $allowpostreply && !$_G['forum_thread']['archiveid'] && ($_G['forum']['status'] != 3 || $_G['isgroupuser'])}-->
+<!--{subtemplate forum/forumdisplay_fastpost}-->
+<!--{else}-->
+<div class="wmt">
+{lang login_to_reply}&nbsp;&nbsp;<a href="member.php?mod=logging&action=login" class="xi2">{lang login}</a><span class="pipe">|</span><a href="member.php?mod={$_G[setting][regname]}" class="xi2">{echo m_lang('reg')}</a>
+</div>
+<!--{/if}-->
+<!--{/if}-->
+
+<!--{hook/viewthread_bottom_mobile}-->
+<!--{subtemplate common/footer}-->

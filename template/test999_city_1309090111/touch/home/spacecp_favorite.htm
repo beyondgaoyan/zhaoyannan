@@ -1,0 +1,34 @@
+<!--{subtemplate common/header}-->
+<div class="ct">
+<div class="pt bb">
+<a href="javascript:history.back();" onclick="javascript:history.back();" >{lang back}</a> <em> &gt; </em> <!--{if $_GET['op'] == 'delete'}-->{lang delete_favorite}<!--{else}-->{lang title_memcp_favorite}<!--{/if}-->
+</div>
+<div class="box ipc">
+<!--{if $_GET['op'] == 'delete'}-->	
+	<form id="favoriteform_{$favid}" name="favoriteform_{$favid}" method="post" autocomplete="off" action="home.php?mod=spacecp&ac=favorite&op=delete&favid=$favid&type=$_GET[type]">
+		<input type="hidden" name="referer" value="{eval echo dreferer();}" />
+		<input type="hidden" name="deletesubmit" value="true" />
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+    <div class="ipcl xg1">$thevalue[title]</div>
+	<div class="ipcl xg1">{lang delete_favorite_message}</div>
+	<div class="inbox mtm">
+		<input type="submit" name="deletesubmitbtn" value="{lang determine}" class="ibt" />
+	</div>
+	</form>
+<!--{else}-->	
+    <div class="ipcl xg1"><!--{if $_GET[type] == 'forum'}-->{lang favorite_forum_confirm}<!--{elseif $_GET[type] == 'thread'}--> {lang favorite_thread_confirm}<!--{/if}--><strong>{$title}</strong></div>
+	<form method="post" autocomplete="off" id="favoriteform_{$id}" name="favoriteform_{$id}" action="home.php?mod=spacecp&ac=favorite&type=$type&id=$id&spaceuid=$spaceuid" >
+		<input type="hidden" name="favoritesubmit" value="true" />
+		<input type="hidden" name="referer" value="{eval echo dreferer();}" />
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+	<div class="ipcl xg1">{lang favorite_description}:</div>
+	<div class="ipcc ipct"><textarea id="general_{$id}" name="description" rows="1" ><!--{if $description}-->$description<!--{else}-->{lang favorite_description_default}<!--{/if}--></textarea></div>
+	<div class="inbox mtm">
+		<input type="submit" name="favoritesubmit_btn" id="favoritesubmit_btn"  value="{lang determine}" class="ibt" />
+	</div>
+	</form>
+<!--{/if}-->
+</div>
+</div>
+
+<!--{subtemplate common/footer}-->

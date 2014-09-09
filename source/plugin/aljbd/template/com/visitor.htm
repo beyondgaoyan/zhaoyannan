@@ -1,0 +1,10 @@
+<div class="wgt" id="visitor_list">
+<div class="viewtitle cl">
+<h2 class="z">{lang aljbd:s164}<span>({lang aljbd:s165}{eval echo C::t('#aljbd#aljbd_username')->count_by_bid($_GET['bid']);}{lang aljbd:s166})</span></h2>
+</div>
+<ul class="cl">
+{loop C::t('#aljbd#aljbd_username')->fetch_all_by_bid($_GET['bid'],0,40) $user}
+<li><a href="home.php?mod=space&uid={$user['uid']}&do=profile" target="_blank" title="$user['username']"><img width="30" height="30" src="{eval echo avatar($user['uid'],'small',true);}" alt="avatar"></a></li>
+{/loop}
+</ul>
+</div>

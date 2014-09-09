@@ -1,0 +1,43 @@
+<div class="ct ctpd">
+<div class="ipc">
+  <form method="post" name="inputform" autocomplete="off" id="fastpostform" action="forum.php?mod=post&action=reply&fid=$_G[fid]&tid=$_G[tid]&extra=$_GET[extra]&replysubmit=yes">
+   	  <input type="hidden" name="formhash" value="{FORMHASH}" />
+      <!--{if $_G[forum_thread][special] == 5 && empty($firststand)}-->
+        <div class="inbox">
+        <select id="stand" name="stand" >
+            <option value="">{lang debate_viewpoint}</option>
+            <option value="0">{lang debate_neutral}</option>
+            <option value="1">{lang debate_square}</option>
+            <option value="2">{lang debate_opponent}</option>
+        </select>
+      </div>
+      <!--{/if}-->
+      <div class="ipcp">
+      <!--{$msmile}-->
+      <div class="ipcc">
+      <textarea name="message" id="fastpostmessage" cols="25" rows="7"></textarea>
+      </div>
+      </div>
+      <!--{if checkperm('seccode') && ($secqaacheck || $seccodecheck)}-->
+      <!--{subtemplate common/seccheck}-->
+      <!--{/if}-->
+      <div class="inbox"><input type="submit" name="replysubmit" id="fastpostsubmit" value="{lang reply}" class="ibt ibtp" /></div>
+    </form>
+</div>
+
+<script language="javascript">
+function insertIcon(iconCode) {
+ var txtarea = document.inputform.message;
+ iconCode = '' + iconCode + '';
+ if (txtarea.createTextRange && txtarea.caretPos) {
+ var caretPos = txtarea.caretPos;
+ caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == '' ? iconCode + '' : iconCode;
+ txtarea.focus();
+ } else {
+ txtarea.value += iconCode;
+ txtarea.focus();
+ }
+}
+</script>
+
+</div>

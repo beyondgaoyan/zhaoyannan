@@ -1,0 +1,753 @@
+{template aljbd:header_hao}
+<script src="source/plugin/aljbd/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var jq=jQuery.noConflict();
+</script>
+<link href="source/plugin/aljbd/css/common.css" rel="stylesheet" type="text/css">
+<div id="bd" class="wrap cl">
+<div id="block0" class="block cl">
+<div class="main">
+<div id="slider_wrap">
+<div class="slideblock"><ul class="slideimg">
+<li class="active">
+<a href="portal.php?mod=topic&topicid=29" target="_blank"><img src="/source/plugin/aljbd/wall/lochal01.jpg" width="715" height="295" id="wimg_1"></a>
+</li>
+<li class="active">
+<a href="portal.php?mod=topic&topicid=23" target="_blank"><img src="/source/plugin/aljbd/wall/lochal02.jpg" width="715" height="295" id="wimg_1"></a>
+</li>
+<li class="active">
+<a href="thread-169380-1-1.html" target="_blank"><img src="/source/plugin/aljbd/wall/lochal03.jpg" width="715" height="295" id="wimg_1"></a>
+</li>
+</ul>
+<div class="slidenumwrap">
+<ul class="slidenum">
+<li>1</li>
+<li>2</li>
+<li>3</li>
+</ul>
+</div>
+<div class="slidebar"></div></div>
+</div>
+</div>
+<div class="side">
+<div id="button" class="mbm cl">
+<a href="plugin.php?id=aljbd&act=attend" class="btn" style="float:left;">品牌入驻</a><a href="plugin.php?id=aljbd&act=member" onclick="showDialog('您还没有入驻哦，先申请吧！');return false;" class="btn btnr">品牌管理</a></div>
+
+<div id="notice_list" class="wgt">
+<div class="title cl">
+<h2 class="z">最新商情</h2>
+<a class="more y" href="plugin.php?id=aljbd&act=shanglist">更多</a>
+</div>
+<ul>
+{loop $shanglist $shang}
+<li><a target="_blank" href="/plugin.php?id=aljbd&act=noticeview&bid={$shang['bid']}&nid={$shang['id']}" style="" title="$shang['subject']">$shang['subject']</a></li>
+{/loop}
+</ul>
+</div>
+</div>
+</div>
+<!--block--><div id="block1" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(1);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=1" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(1,9) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=1&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=1" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=10" target="_blank"><img src="/source/plugin/aljbd/wall/ms01.jpg" alt="火锅" width="264" height="264" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=18" target="_blank"><img src="/source/plugin/aljbd/wall/ms02.jpg" alt="江浙菜" width="127" height="127" border="0" /></a></td>
+            <td><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=99" target="_blank"><img src="/source/plugin/aljbd/wall/ms03.jpg" alt="湘菜" width="127" height="127" border="0" /></a></td>
+          </tr>
+        </table>        </td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=17" target="_blank"><img src="/source/plugin/aljbd/wall/ms04.jpg" alt="川菜" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=14" target="_blank"><img src="/source/plugin/aljbd/wall/ms05.jpg" alt="韩式料理" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=19" target="_blank"><img src="/source/plugin/aljbd/wall/ms06.jpg" alt="鲁菜" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table>
+    </td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=12" target="_blank"><img src="/source/plugin/aljbd/wall/ms07.jpg" alt="烧烤" width="127" height="127" border="0" /></a></td>
+        <td><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=13" target="_blank"><img src="/source/plugin/aljbd/wall/ms08.jpg" alt="西餐" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table>
+      <table width="264" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=1&subtype=16" target="_blank"><img src="/source/plugin/aljbd/wall/ms09.jpg" alt="海鲜" width="264" height="264" border="0" /></a></td>
+        </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(1,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+<ul>
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(1,6);}
+{loop $ren1 $ty}
+<li ><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{/loop}
+</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=1">更多</a>
+</div>
+<ul>
+{eval $i=1;}
+{loop $limit_one $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}
+</ul>
+</div>
+<div class="sidea"><a href="thread-136197-1-1.html" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" alt="乐乘网广告位" border="0"></a></div>
+</div>
+</div>
+<div id="block2" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(3);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=3" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(3,7) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=3&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=3" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td  valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=3&subtype=24" target="_blank"><img src="/source/plugin/aljbd/wall/jj01.jpg" alt="家纺" width="264" height="127" border="0" /></a></td>
+      </tr>
+	  <tr>
+        <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=3&subtype=21" target="_blank"><img src="/source/plugin/aljbd/wall/jj02.jpg" alt="家具" width="264" height="264" border="0" /></a></td>
+      </tr>
+	  
+    </table>
+    </td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=3&subtype=22" target="_blank"><img src="/source/plugin/aljbd/wall/jj03.jpg" alt="电器" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=3&subtype=20" target="_blank"><img src="/source/plugin/aljbd/wall/jj04.jpg" alt="装修建材" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=3&subtype=23" target="_blank"><img src="/source/plugin/aljbd/wall/jj05.jpg" alt="卖场" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table></td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+        <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=3&subtype=26" target="_blank"><img src="/source/plugin/aljbd/wall/jj06.jpg" alt="装饰公司" width="264" height="264" border="0" /></a></td>
+      </tr>
+		  <tr>
+            <td height="0" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=3" target="_blank"><img src="/source/plugin/aljbd/wall/jj07.jpg" alt="更多" width="264" height="127" border="0" /></a></td>
+          </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(3,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(3,6);$i=1;}
+{loop $ren1 $ty}
+<li {if $i==6}class="mr0"{/if}><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{eval $i++;}{/loop}</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=4">更多</a>
+</div>
+<ul>{eval $i=1;}
+{loop $limit_three $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}</ul>
+</div>
+<div class="sidea"><a href="thread-160926-1-1.html" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" alt="乐乘网广告位" border="0"></a></div>
+</div>
+</div>
+<div id="block3" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(4);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=4" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(4,7) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=4&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=4" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=39" target="_blank"><img src="/source/plugin/aljbd/wall/gw01.jpg" alt="超市" width="264" height="264" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=36" target="_blank"><img src="/source/plugin/aljbd/wall/gw02.jpg" alt="母婴儿童" width="127" height="127" border="0" /></a></td>
+            <td><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=101" target="_blank"><img src="/source/plugin/aljbd/wall/gw03.jpg" alt="书店" width="127" height="127" border="0" /></a></td>
+          </tr>
+      </table></td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=32" target="_blank"><img src="/source/plugin/aljbd/wall/gw04.jpg" alt="服饰鞋帽" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=30" target="_blank"><img src="/source/plugin/aljbd/wall/gw05.jpg" alt="综合商场" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=35" target="_blank"><img src="/source/plugin/aljbd/wall/gw06.jpg" alt="运动户外" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table></td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=34" target="_blank"><img src="/source/plugin/aljbd/wall/gw07.jpg" alt="化妆品" width="127" height="127" border="0" /></a></td>
+        <td><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=33" target="_blank"><img src="/source/plugin/aljbd/wall/gw08.jpg" alt="珠宝饰品" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=4&subtype=31" target="_blank"><img src="/source/plugin/aljbd/wall/gw09.jpg" alt="食品茶酒" width="264" height="264" border="0" /></a></td>
+          </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(4,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(4,6);}
+{loop $ren1 $ty}
+<li ><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{/loop}</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=4">更多</a>
+</div>
+<ul>{eval $i=1;}
+{loop $limit_four $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}</ul>
+</div>
+<div class="sidea"><a href="forum.php?mod=forumdisplay&fid=217" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" border="0"></a></div>
+</div>
+</div>
+<div id="block4" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(5);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=5" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(5,9) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=5&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=5" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=41" target="_blank"><img src="/source/plugin/aljbd/wall/xx01.jpg" alt="酒吧" width="264" height="264" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=48" target="_blank"><img src="/source/plugin/aljbd/wall/xx02.jpg" alt="健身房" width="127" height="127" border="0" /></a></td>
+            <td><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=47" target="_blank"><img src="/source/plugin/aljbd/wall/xx03.jpg" alt="台球室" width="127" height="127" border="0" /></a></td>
+          </tr>
+      </table></td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=40" target="_blank"><img src="/source/plugin/aljbd/wall/xx04.jpg" alt="咖啡厅" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=45" target="_blank"><img src="/source/plugin/aljbd/wall/xx05.jpg" alt="洗浴" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=42" target="_blank"><img src="/source/plugin/aljbd/wall/xx06.jpg" alt="茶馆" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table></td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=44" target="_blank"><img src="/source/plugin/aljbd/wall/xx07.jpg" alt="电影院" width="127" height="127" border="0" /></a></td>
+        <td><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=46" target="_blank"><img src="/source/plugin/aljbd/wall/xx08.jpg" alt="足疗" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=5&subtype=108" target="_blank"><img src="/source/plugin/aljbd/wall/xx09.jpg" alt="景点" width="264" height="264" border="0" /></a></td>
+          </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(5,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(5,6);}
+{loop $ren1 $ty}
+<li ><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{/loop}</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=5">更多</a>
+</div>
+<ul>{eval $i=1;}
+{loop $limit_five $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}</ul>
+</div>
+<div class="sidea"><a href="http://weibo.com/525670618" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" alt="乐乘网广告位" border="0"></a></div>
+</div>
+</div>
+<div id="block5" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(6);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=6" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(6,8) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=6&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=6" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=51" target="_blank"><img src="/source/plugin/aljbd/wall/lr01.jpg" alt="美容/SPA" width="264" height="264" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=59" target="_blank"><img src="/source/plugin/aljbd/wall/lr02.jpg" alt="齿科" width="127" height="127" border="0" /></a></td>
+            <td><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=50" target="_blank"><img src="/source/plugin/aljbd/wall/lr03.jpg" alt="美发" border="0" /></a></td>
+          </tr>
+      </table></td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=54" target="_blank"><img src="/source/plugin/aljbd/wall/lr04.jpg" alt="美甲" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=56" target="_blank"><img src="/source/plugin/aljbd/wall/lr05.jpg" alt="舞蹈" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=58" target="_blank"><img src="/source/plugin/aljbd/wall/lr06.jpg" alt="整形" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table></td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=52" target="_blank"><img src="/source/plugin/aljbd/wall/lr07.jpg" alt="化妆品" width="127" height="127" border="0" /></a></td>
+        <td><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=53" target="_blank"><img src="/source/plugin/aljbd/wall/lr08.jpg" alt="纤身瘦身" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=6&subtype=55" target="_blank"><img src="/source/plugin/aljbd/wall/lr09.jpg" alt="瑜珈" width="264" height="264" border="0" /></a></td>
+          </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(6,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(6,6);}
+{loop $ren1 $ty}
+<li ><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{/loop}</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=6">更多</a>
+</div>
+<ul>{eval $i=1;}
+{loop $limit_six $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}</ul>
+</div>
+<div class="sidea"><a href="forum-210-1.html" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" alt="乐乘网广告位" border="0"></a></div>
+</div>
+</div>
+<div id="block6" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(7);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=7" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(7,7) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=7&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=7" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=61" target="_blank"><img src="/source/plugin/aljbd/wall/jh01.jpg" alt="婚宴酒店" width="265" height="127" border="0" /></a></td>
+      </tr>
+	  <tr>
+        <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=63" target="_blank"><img src="/source/plugin/aljbd/wall/jh02.jpg" alt="婚纱礼服" width="264" height="264" border="0" /></a></td>
+      </tr>
+    </table>
+    </td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=65" target="_blank"><img src="/source/plugin/aljbd/wall/jh03.jpg" alt="彩妆造型" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=64" target="_blank"><img src="/source/plugin/aljbd/wall/jh04.jpg" alt="婚庆公司" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=62" target="_blank"><img src="/source/plugin/aljbd/wall/jh05.jpg" alt="婚戒首饰" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table></td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=60" target="_blank"><img src="/source/plugin/aljbd/wall/jh06.jpg" alt="婚纱摄影" width="264" height="264" border="0" /></a></td>
+          </tr>
+		  <tr><td><a href="/plugin.php?id=aljbd&act=pulist&type=7&subtype=68" target="_blank"><img src="/source/plugin/aljbd/wall/jj07.jpg" alt="更多" width="264" height="127" border="0" /></a></td>
+		  </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(7,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(7,6);}
+{loop $ren1 $ty}
+<li ><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{/loop}</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=7">更多</a>
+</div>
+<ul>{eval $i=1;}
+{loop $limit_seven $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}</ul>
+</div>
+<div class="sidea"><a href="thread-169380-1-1.html" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" border="0"></a></div>
+</div>
+</div>
+<div id="block7" class="block cl">
+<div class="main">
+<div class="content">
+<div class="catnav cl">
+{eval $arg=C::t('#aljbd#aljbd_type')->fetch_upid_by_id_upid(8);}
+<h2 class="title"><a href="plugin.php?id=aljbd&act=pulist&type=8" target="_blank">$arg</a></h2>
+<ul class="cats">
+{loop C::t('#aljbd#aljbd_type')->fetch_all_by_upids(8,8) $tt}
+{eval $args=C::t('#aljbd#aljbd')->count_by_subtype($tt['id']);}
+<li><a href="plugin.php?id=aljbd&act=pulist&type=8&subtype={$tt['id']}" target="_blank">$tt['subject']<span>({if $args[0]['num']}$args[0]['num']{else}0{/if})</span></a></li>
+{/loop}
+</ul>
+<a href="plugin.php?id=aljbd&act=pulist&type=8" class="y">更多</a>
+</div>
+<div class="new cl">
+<table width="675" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="274" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="274" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=71" target="_blank"><img src="/source/plugin/aljbd/wall/sh01.jpg" alt="汽车服务" width="264" height="264" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=73" target="_blank"><img src="/source/plugin/aljbd/wall/sh02.jpg" alt="旅行社" width="127" height="127" border="0" /></a></td>
+            <td><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=78" target="_blank"><img src="/source/plugin/aljbd/wall/sh03.jpg" alt="医院" width="127" height="127" border="0" /></a></td>
+          </tr>
+      </table></td>
+    <td width="137" valign="top"><table width="127" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=111" target="_blank"><img src="/source/plugin/aljbd/wall/sh04.jpg" alt="儿童摄影" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td height="137" valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=112" target="_blank"><img src="/source/plugin/aljbd/wall/sh05.jpg" alt="快照/冲印" width="127" height="127" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=74" target="_blank"><img src="/source/plugin/aljbd/wall/sh06.jpg" alt="宠物" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table></td>
+    <td width="264" valign="top"><table width="264" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="137"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=114" target="_blank"><img src="/source/plugin/aljbd/wall/sh07.jpg" alt="干洗店" width="127" height="127" border="0" /></a></td>
+        <td><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=79" target="_blank"><img src="/source/plugin/aljbd/wall/sh08.jpg" alt="学校" width="127" height="127" border="0" /></a></td>
+      </tr>
+    </table>
+        <table width="264" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="274" valign="bottom"><a href="/plugin.php?id=aljbd&act=pulist&type=8&subtype=75" target="_blank"><img src="/source/plugin/aljbd/wall/sh09.jpg" alt="培训" width="264" height="264" border="0" /></a></td>
+          </tr>
+      </table></td>
+  </tr>
+</table></div>
+<div class="comments cl">
+{eval $com1=C::t('#aljbd#aljbd_comment')->fetch_num_by_index(8,3);}
+{loop $com1 $com}
+<dl >
+<dd class="avatar"><a href="home.php?mod=space&uid={$com['uid']}&do=profile" target="_blank"><img width="40" height="40" src="{eval echo avatar($com['uid'],'small',true)}" alt="avatar"></a></dd>
+<dt><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['bid']}">$com['name']</a></dt>
+<dd><img src="source/plugin/aljbd/images/{$com['h']}.gif" /></dd>
+<dd><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$com['id']}#comment1"><span class="message">{eval echo substr($com['content'],0,48);}...</span></a></dd>							
+</dl>
+{/loop}
+</div>
+<div class="vipshop cl">
+{eval $ren1=C::t('#aljbd#aljbd')->fetch_all_by_ren_shout(8,6);}
+{loop $ren1 $ty}
+<li ><a target="_blank" href="plugin.php?id=aljbd&act=view&bid={$ty['id']}"><img width="100" height="100" src="{if file_exists($ty['logo'])}$ty['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" /><span> </span></a></li></ul>
+{/loop}</div>
+</div>
+</div>
+<div class="side">
+<div class="hotvip cl">
+<div class="sidetitle cl">
+<h2 class="z">推荐商家</h2><a class="y more" onclick="updateListView('street', 'filterbyvip', '1');" href="plugin.php?id=aljbd&act=pulist&renzheng=8">更多</a>
+</div>
+<ul>{eval $i=1;}
+{loop $limit_fox $recommend}
+<li {if $i==1}class="active"{/if}>
+<a href="{if $config['isrewrite']}brand_shop_{$recommend['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$recommend['id']}{/if}" target="_blank">
+<img width="205" alt="{$recommend['name']}" src="{$recommend['logo']}">
+<span>{$recommend['name']}</span>
+</a>
+</li>
+{eval $i++;}
+{/loop}</ul>
+</div>
+<div class="sidea"><a href="thread-160926-1-1.html" target="_blank"><img src="/source/plugin/aljbd/wall/lochal04.jpg" height="164" width="224" border="0"></a></div>
+</div>
+</div>
+</div>
+<script charset="utf-8" type="text/javascript" src="static/js/simpleslide.js"></script>
+<script>
+jq(function(){
+jq('.catnav .cats li').mouseover(function(){
+jq(this).addClass("hover");
+}).mouseout(function(){
+jq(this).removeClass("hover");
+});
+jq('.slidenumwrap').css('width',jq('.slidenum').width()+'px');
+});
+jq(function(){
+jq('#slider_wrap .slidenum li').mouseover(function(){
+if(!jq(this).hasClass('active')){
+jq(this).addClass('active').siblings().removeClass('active');
+var i=jq(this).index();
+jq('#slider_wrap .slideimg li:eq('+i+')').addClass('active').siblings().removeClass('active');
+}
+clearInterval(slideloop);
+}).mouseout(function(){
+autoactive();
+});
+var slideloop;
+function autoactive(){
+slideloop = setInterval(function(){
+var index = jq('#slider_wrap .slidenum li.active').index();
+index = index<(jq('#slider_wrap .slidenum li').length-1)?(index+1):0;
+jq('#slider_wrap .slidenum li:eq('+index+')').trigger('mouseover').trigger('mouseout');
+},3000);
+}
+autoactive();
+});
+jq(function(){
+jq('.hotvip li').mouseover(function(){
+jq(this).addClass('active').siblings().removeClass('active');
+})
+jq('.hotvip:eq(0) ul').simpleSlideClass({intervalTime: 2});
+jq('.hotvip:eq(1) ul').simpleSlideClass({intervalTime: 2});
+jq('.hotvip:eq(2) ul').simpleSlideClass({intervalTime: 2});
+jq('.hotvip:eq(3) ul').simpleSlideClass({intervalTime: 2});
+jq('.hotvip:eq(4) ul').simpleSlideClass({intervalTime: 2});
+})
+</script>
+<script charset="utf-8" type="text/javascript" src="static/js/index.js"></script>
+<div id="back2top">
+<ul class="list">
+<li><a href="#block1" class="focus">美食</a></li>
+<li><a href="#block2">家居</a></li>
+<li><a href="#block3">购物</a></li>
+<li><a href="#block4">休闲</a></li>
+<li><a href="#block5">丽人</a></li>
+<li><a href="#block6">结婚</a></li>
+<li><a href="#block7">生活</a></li>
+</ul>
+<a class="addfavorite" href="javascript:;" onclick="javascript:addBookmark('滨海好店', 'brand/');"></a><a target="_blank" class="signup" href="member.php?mod=registers.php">注册会员</a><a class="back2top" href="#"></a>
+</div>
+<script>
+jq(function(){
+var back2tops=jq('#back2top ul a');
+back2tops.click(function(){
+var id = jq(this).attr('href');
+if (jq(id)) {
+var offset = jq(id).offset();
+jq(document).scrollTop(offset.top-10);
+};
+return false;
+})
+var blocks=jq('#bd>.block');
+var blocktops=[];
+for(i=0;i<blocks.length;i++){ 
+blocktops.push(blocks.eq(i).offset().top);
+};
+//if(jQuery.browser.version!='6.0'){
+jq(window).scroll(function(){
+var scrolltop = jq(document).scrollTop();
+for	(i=0;i<blocktops.length;i++){
+if(scrolltop>=blocktops[i] && scrolltop<=blocktops[i+1]){
+back2tops.removeAttr('class');
+back2tops.eq(i).addClass('focus');
+}
+}
+})
+//}
+})
+</script>
+
+{template aljbd:footer_hao}

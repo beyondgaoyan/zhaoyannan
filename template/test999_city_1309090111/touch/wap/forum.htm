@@ -1,0 +1,22 @@
+<!--{loop $catlist $key $cat}-->
+     <div class="catlist">	
+    	<h1><a href="forum.php?gid=$cat[fid]&mod=forum">$cat[name]</a><span id="subfrm_$cat[fid]" onclick="dbox('subfrm_$cat[fid]','o');"{if $catopen == 1} class="o"{/if}></span></h1>
+            <ul id="subfrm_$cat[fid]_menu" style="display: {if $catopen == 1}block{else}none{/if}">            
+            <!--{loop $cat[forums] $forumid}-->
+                <li>              
+                    <!--{eval $forum=$forumlist[$forumid];}-->
+                    <!--{if $forum[icon]}-->
+					$forum[icon]
+					<!--{else}-->
+					<a href="forum.php?mod=forumdisplay&fid={$forum['fid']}"><img src="./mplus/img/forum{if $forum[folder]}_new{/if}.png"/></a>
+					<!--{/if}-->                    
+                    <a href="forum.php?mod=forumdisplay&fid={$forum['fid']}" class="a">
+                    <p class="f_nm">{$forum[name]}</p>
+                    <!--{if $forum[description]}--><p class="xg1 f_dp">{echo cutstr(strip_tags($forum[description]),30)}</p><!--{/if}-->
+                    <!--{if $forum[todayposts]}--><span>$forum[todayposts]</span><!--{/if}-->
+                    </a>
+                </li>
+            <!--{/loop}-->
+            </ul>              
+            </div>  
+<!--{/loop}-->

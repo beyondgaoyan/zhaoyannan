@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-control" content="{if $_G['setting']['mobile'][mobilecachetime] > 0}{$_G['setting']['mobile'][mobilecachetime]}{else}no-cache{/if}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no" />
+<meta name="keywords" content="$metakeywords" />
+<meta name="description" content="$metadescription" />
+<title>$navtitle</title>
+</head>
+<link href="source/plugin/aljbd/css/touch.css" rel="stylesheet" type="text/css">
+<script  type="text/javascript">
+
+function Dd(i) {return document.getElementById(i);}
+function Ds(i) {Dd(i).style.display = '';}
+function Dh(i) {Dd(i).style.display = 'none';}
+function Dback(url) {
+	if(document.referrer) {
+		window.history.back();
+		//window.location.href = document.referrer;
+	} else {
+		window.location.href = url ? url : 'index.php';
+	}
+}
+</script>
+
+<body><div class="head_bar">
+<table>
+<tbody><tr>
+<td class="head_bar_td_w5">&nbsp;</td>
+<td class="head_bar_td_w50"><div class="head_back"><a href="{if $config[isrewrite]}brand.html{else}plugin.php?id=aljbd{/if}"><span>{lang aljbd:sj_list_1}</span></a></div></td>
+<td ><div class="head_name"><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}"><span >{$bd['name']}</span></a></div></td>
+<td class="head_bar_td_w55 t_r"></td>
+</tr>
+</tbody></table>
+</div>
+<div class="head_bar_fix"></div>
+<div class="main">
+<div class="title"><strong>{$bd['name']}</strong></div>
+<div class="info">{lang aljbd:sj_list_5}<small>{eval echo gmdate('Y-m-d H:i:s',$bd['dateline']+8*3600);}</small>&nbsp;&nbsp;{lang aljbd:sj_list_6}<small>$bd['view']</small></div>
+<div class="album">
+<table>
+<tbody><tr>
+<td onclick="album_prev();" class="album_p">&nbsp;</td>
+<td><div id="album"><img id="photo" src="$bd['logo']" width="120" height="120"></div></td>
+<td onclick="album_next();" class="album_n">&nbsp;</td>
+</tr>
+<tr>
+<td></td>
+<td class="t_c">
+<!--<span onclick="album_show(0);" style="" id="dot_0" >&nbsp;</span>
+<span onclick="album_show(1);" style="" id="dot_1" class="album_o">&nbsp;</span>
+<span onclick="album_show(2);" style="" id="dot_2" class="album_o">&nbsp;</span>-->
+</td>
+<td></td>
+</tr>
+</tbody></table>
+</div>
+<!--<script type="text/javascript">
+var TB = ['$bd[logo]', 
+</script>
+<script  type="text/javascript">
+
+var cur = max = X1 = X2 = 0;
+if(TB[1]) {max++;Ds('dot_0');Ds('dot_1');}
+if(TB[2]) {max++;Ds('dot_2');}	
+function album_show(obj) {
+	if(max == 0) return;
+	if(TB[obj] && obj != cur) {
+		Dd('photo').src = TB[obj];
+		Dd('dot_'+obj).className = 'album_c';
+		Dd('dot_'+cur).className = 'album_o';
+		cur = obj;
+	}
+}
+function album_next() {
+	if(cur == max) {
+		album_show(0);
+	} else {
+		album_show(cur + 1);
+	}
+}
+function album_prev() {
+	if(cur == 0) {
+		album_show(max);
+	} else {
+		album_show(cur - 1);
+	}
+}
+Dd('album').ontouchstart = function(event) {
+	event.preventDefault();
+	var touch = event.targetTouches[0];
+	X1 = touch.pageX;
+}
+Dd('album').ontouchmove = function(event) {
+	if(event.targetTouches.length == 1) {
+		event.preventDefault();
+		var touch = event.targetTouches[0];
+		X2 = touch.pageX;
+	}
+}
+Dd('album').ontouchend = function(event) {
+	if(X1 < X2) {//right
+		album_prev();
+	} else {
+		album_next();
+	}
+	X1 = X2 = 0;
+}
+</script>-->
+<div class="content">
+{lang aljbd:s150}{$bd['username']}</br>
+{lang aljbd:s256}{$rlist[$bd['region']]['name']}{if $bd['subregion']} >{$rlist[$bd['subregion']]['name']}{/if}<br>
+{lang aljbd:s125}{$bd['addr']}<br>
+<a href="tel:{$bd['tel']}" >{lang aljbd:s126}{$bd['tel']}<img src="source/plugin/aljbd/images/tel.jpg" width=20px;></a><br>
+{lang aljbd:s127}{$typelist[$bd['type']]['subject']}{if $bd['subtype']} > {$typelist[$bd['subtype']]['subject']}{/if}<br>
+{lang aljbd:s130}</span><br>
+<span style="word-break: break-all; font-family: Verdana, Arial; color: rgb(51, 51, 51); font-size: 12px; line-height: 25px; clear: both; width: auto; padding: 10px 5px; ">{$bd['intro']}</span></br>
+{lang aljbd:s132}{$bd['other']}</br>
+</div>
+{if file_exists('source/plugin/aljbd/com/mark.php')}
+<div id="map" class="wgt">
+<div style=" height: 205px;" id="map_canvas"></div>
+<script src="http://api.map.baidu.com/api?v=1.3" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+function initialize() {
+
+var point;
+var mapapimark = "{if $bd['x']&&$bd['y']}({$bd['x']}, {$bd['y']}){/if}";
+var local = "";
+
+if(mapapimark) {
+var mapapimarkaction = true;
+point = new BMap.Point({$bd['x']}, {$bd['y']});
+} else {
+if(!local) {
+var defaultmapaction = true;
+point = new BMap.Point({$config['x']},{$config['y']});
+} else {
+var geoaction = true;
+}
+}
+
+var map = new BMap.Map("map_canvas");
+map.enableScrollWheelZoom();
+map.centerAndZoom(point, 14);
+
+if(mapapimarkaction) {
+var marker = new BMap.Marker(point, {title: "{$bd['name']}"});
+map.addOverlay(marker);
+} else if(geoaction) {
+var Geocoder = new BMap.Geocoder();
+if(Geocoder) {
+Geocoder.getPoint(local, function(point){
+if (point) {
+map.centerAndZoom(point, 14);
+//map.addOverlay(new BMap.Marker(point));
+} else {
+alert("{lang aljbd:s169}");
+}
+}, "");
+}
+}
+}
+initialize();
+</script>
+</div>
+{/if}
+<div class="box_head" style="margin-bottom:10px;text-align:center;"><strong>{lang aljbd:sj_list_7}</strong></div>
+{if $commentlist}
+<div style="margin:8px auto 0;width:100%">
+    <ul>
+	{loop $commentlist $comment}
+       <li style="color:#666666;padding:8px 0;width:100%">
+          <p  style="margin:0;padding:0;font-size:10pt;">
+              <span style="float:left;margin:0;padding:0;font-size:10pt;padding-right:5px;"><img width="30" height="30" alt="" src="{eval echo avatar($comment['uid'],'small',true);}"></span>
+                  <strong style="font-size:10pt;color:#568C10;">{if $comment['username']}$comment['username']{else}{lang aljbd:sj_list_8}{/if}</strong>
+                  <em style="font-size:10pt;">{eval echo gmdate('Y-m-d H:i:s',$comment['dateline']+8*3600);}</em>
+          </p>
+          <p style="margin:0px;font-size:10pt;">$comment['content']</p>
+      </li>
+      {/loop}  
+	  
+  </ul>
+
+</div>
+{else}
+{lang aljbd:sj_list_9}
+{/if}
+<div class="fm">
+<form method="post" action="plugin.php?id=aljbd">
+<input type="hidden" value="{FORMHASH}" name="formhash">
+<input type="text" class="fm_inp" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-widget="quickdelete" size="15" value="" name="kw">
+<input type="submit" class="fm_sbm" value="{lang aljbd:sj_list_3}" name="submit">
+</form>
+</div></div>
+
+<div style="background: none repeat scroll 0 0 #0287E4;color: #FFFFFF;margin-top: 10px;width: 100%;text-align:center;height:40px;">
+<ul style="padding:10px 0;">
+    <li>
+{lang aljbd:sj_list_4}{eval echo gmdate('Y-m-d H:i:s',$_G['timestamp']+8*3600);}    </li>
+</ul>
+</div>
+<!--{eval updatesession();}-->
+<!--{if defined('IN_MOBILE')}-->
+	<!--{eval output();}-->
+<!--{else}-->
+	<!--{eval output_preview();}-->
+<!--{/if}-->

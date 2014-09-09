@@ -1,0 +1,47 @@
+<!--{if CURMODULE != 'logging'}-->
+	<script type="text/javascript" src="{$_G[setting][jspath]}logging.js?{VERHASH}"></script>
+	<form method="post" autocomplete="off" id="lsform" action="member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes" onsubmit="{if $_G['setting']['pwdsafety']}pwmd5('ls_password');{/if}return lsSubmit();">
+	<div class="t9_fastlg cl">
+		<span id="return_ls" style="display:none"></span>             
+               <!--{if !$_G['setting']['autoidselect']}-->
+						<div class="t9_00 t9_01">
+							<span class="ftid">
+								<select name="fastloginfield" id="ls_fastloginfield" width="44" tabindex="900">
+									<option value="username">{lang username}</option>
+									<!--{if getglobal('setting/uidlogin')}-->
+									<option value="uid">{lang uid}</option>
+									<!--{/if}-->
+									<option value="email">{lang email}</option>
+								</select>
+							</span>
+							<script type="text/javascript">simulateSelect('ls_fastloginfield')</script>
+						</div>
+						<div class="t9_00 t9_02"><input type="text" name="username" id="ls_username" autocomplete="off" class="px vm" tabindex="901" /></div>
+					<!--{else}-->
+						<div class="t9_00 t9_03"><label for="ls_username">{lang account}</label></div>
+						<div class="t9_00 t9_04"><input type="text" name="username" id="ls_username" class="px vm xg1" {if $_G['setting']['autoidselect']} value="{if getglobal('setting/uidlogin')}UID/{/if}{lang username}/Email" onfocus="if(this.value == '{if getglobal('setting/uidlogin')}UID/{/if}{lang username}/Email'){this.value = '';this.className = 'px vm';}" onblur="if(this.value == ''){this.value = '{if getglobal('setting/uidlogin')}UID/{/if}{lang username}/Email';this.className = 'px vm xg1';}"{/if} tabindex="901" /></div>
+					<!--{/if}-->
+                    <div class="t9_00 t9_05"><label for="ls_password"{if !$_G['setting']['autoidselect']} class=""{/if}>{lang password}</label></div>
+					<div class="t9_00 t9_06"><input type="password" name="password" id="ls_password" class="px vm" autocomplete="off" tabindex="902" /></div>
+                    <div class="t9_00 t9_09"><label for="ls_cookietime"><input type="checkbox" name="cookietime" id="ls_cookietime" class="pc" value="2592000" tabindex="903" />×Ô¶¯µÇÂ¼</label></div>
+					<div class="t9_00 t9_07"><button type="submit" class="pn vm" tabindex="904"><em>{lang login}</em></button></div>
+                    <div class="t9_00 t9_08"><a href="member.php?mod={$_G[setting][regname]}" class="t9_reg">$_G['setting']['reglinkname']</a></div>
+					<div class="t9_00 t9_10"><a href="javascript:;" onclick="showWindow('login', 'member.php?mod=logging&action=login&viewlostpw=1')">{lang forgotpw}</a></div>
+                    <div class="t9_1210221100" onmouseover="return menuOver('t9_btn_01')" onmouseout="return menuOut('t9_btn_01')">
+<a href="$_G[connect][login_url]&statfrom=login_simple" class="t9_btn_qq">QQÕÊºÅµÇÂ¼</a>
+<ul id="t9_btn_01" style="display:none">
+<li><a href="javascript:;" class="t9_btn_weibo">Î¢²©ÕÊºÅµÇÂ¼</a></li>
+</ul>
+</div>
+			<input type="hidden" name="quickforward" value="yes" />
+			<input type="hidden" name="handlekey" value="ls" />
+		
+		
+	</div>
+	</form>
+
+	<!--{if $_G['setting']['pwdsafety']}-->
+		<script type="text/javascript" src="{$_G['setting']['jspath']}md5.js?{VERHASH}" reload="1"></script>
+	<!--{/if}-->
+
+<!--{/if}-->

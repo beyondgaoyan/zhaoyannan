@@ -1,0 +1,100 @@
+<!--{subtemplate common/header_common}-->
+<link rel="stylesheet" type="text/css" href="./mplus/style.css" />
+<!--{subtemplate wap/plus}-->
+<!--{$m_lg}-->
+</head>
+<body>
+
+<div class="login_s">
+<div class="logo_in"><a href="$nav"><img src="./mplus/img/logo_in.png" /></a></div>
+<div class="login_ct">
+{eval $loginhash = 'L'.random(4);}
+<div class="ipc lgs">
+<!--{if $_G['setting']['connect']['allow'] && !$_G['setting']['bbclosed'] && $_G['setting']['version'] != 'X2' || $_G['setting']['regstatus']}-->
+<div class="lgst mbm">
+<!--{if $_G['setting']['connect']['allow'] && !$_G['setting']['bbclosed'] && $_G['setting']['version'] != 'X2'}-->
+<a href="$_G[connect][login_url]&statfrom=login_simple" class="xg3 y qq_login"><img src="./mplus/img/qq_login.png" height="17" />{echo m_lang('qq')}</a>
+<!--{/if}-->
+<!--{if $_G['setting']['regstatus']}--><span class="xg3">{echo m_lang('noid')} <a href="member.php?mod={$_G[setting][regname]}" class="xi2">{echo m_lang('reg')}</a></span><!--{/if}-->
+</div>
+<!--{/if}-->
+
+		<form method="post" action="member.php?mod=logging&action=login&loginsubmit=yes&loginhash=$loginhash" onSubmit="{if $_G['setting']['pwdsafety']}pwmd5('password3_$loginhash');{/if}" >
+		<input type="hidden" name="formhash" id="formhash" value='{FORMHASH}' />
+		<input type="hidden" name="referer" id="referer" value="<!--{if dreferer()}-->{echo dreferer()}<!--{else}-->forum.php?mobile=yes<!--{/if}-->" />	
+	<p>
+		<span>{echo m_lang('username')}</span><input type="text" name="username" id="username_{$loginhash}" />
+	</p>
+	<p>
+		<span>{lang password}</span><input type="password" name="password" id="password3_$loginhash" value='' />
+	</p>	
+	<!--{if $secqaacheck || $seccodecheck}-->    
+	<!--{subtemplate common/seccheck}-->    
+	<!--{/if}-->
+
+        <div id="ser_menu" class="ser_menu" style="display:none">
+        <div class="select">
+        <select name="questionid" id="questionid_{$loginhash}" >
+		<option value="0">{lang security_question}</option>
+		<option value="1">{lang security_question_1}</option>
+		<option value="2">{lang security_question_2}</option>
+		<option value="3">{lang security_question_3}</option>
+		<option value="4">{lang security_question_4}</option>
+		<option value="5">{lang security_question_5}</option>
+		<option value="6">{lang security_question_6}</option>
+		<option value="7">{lang security_question_7}</option>
+		</select>
+        </div>
+		<p>
+        <input type="text" name="answer" id="answer_{$loginhash}" style="width:100%;" />
+        </p>
+        </div> 
+	
+		<label style="display:none;"><input type="checkbox" name="cookietime" id="cookietime_{$loginhash}" value="2592000" checked="checked" />{lang login_permanent}</label>
+	    
+	<div class="inbox mtn lgs_inp" >
+		<input type="submit" name="submit" id="submit" value="{lang login}" class="ibt" />
+		<input type="reset" value="{lang reset}" class="ibt y" />        
+	</div>
+      
+</form>
+</div>
+
+<!--{if $_G['setting']['pwdsafety']}-->
+	<script type="text/javascript" src="{$_G['setting']['jspath']}md5.js?{VERHASH}" reload="1"></script>
+<!--{/if}-->
+<!--{eval updatesession();}-->
+</div>
+<div class="ser"><a href="forum.php" class="z">{echo m_lang('gohome')}</a><a href="javascript:;" id="ser" class="y" onClick="dbox('ser','y');">{echo m_lang('loginaq')}</a></div>
+</div>
+
+<script type="text/javascript">
+function mys(id){
+return !id ? null : document.getElementById(id);
+}
+function openmys(tag,s){
+if(tag.className || s){
+tag.className = '';
+}else{
+tag.className = 'a';
+}
+}
+function dbox(id,classname){
+	if(mys(id+'_menu').style.display =='block'){
+		mys(id+'_menu').style.display ='none'
+		mys(id).className = classname +' a';
+	}else{
+		mys(id+'_menu').style.display ='block'
+		mys(id).className = classname;
+	}
+}
+</script>
+
+</body>
+</html>
+<!--{eval updatesession();}-->
+<!--{if defined('IN_MOBILE')}-->
+	<!--{eval output();}-->
+<!--{else}-->
+	<!--{eval output_preview();}-->
+<!--{/if}-->

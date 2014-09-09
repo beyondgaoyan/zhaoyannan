@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
+<meta http-equiv="Cache-control" content="{if $_G['setting']['mobile'][mobilecachetime] > 0}{$_G['setting']['mobile'][mobilecachetime]}{else}no-cache{/if}" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0;  minimum-scale=1.0; maximum-scale=1.0; user-scalable=no;"/>
+<meta name="MobileOptimized" content="240"/>
+<meta name="Iphone-content" content="320"/>
+<meta name="format-detection" content="telephone=no" />
+<meta name="keywords" content="{if !empty($metakeywords)}{echo dhtmlspecialchars($metakeywords)}{/if}" />
+<meta name="description" content="{if !empty($metadescription)}{echo dhtmlspecialchars($metadescription)} {/if},$_G['setting']['bbname']" />
+<base href="{$_G['siteurl']}" />
+<title><!--{if !empty($navtitle)}-->$navtitle <!--{/if}--><!--{if empty($nobbname)}-->$_G['setting']['sitename']<!--{/if}--></title>
+<script type="text/javascript">var STYLEID = '{STYLEID}', STATICURL = '{STATICURL}', IMGDIR = '{IMGDIR}', VERHASH = '{VERHASH}', charset = '{CHARSET}', discuz_uid = '$_G[uid]', cookiepre = '{$_G[config][cookie][cookiepre]}', cookiedomain = '{$_G[config][cookie][cookiedomain]}', cookiepath = '{$_G[config][cookie][cookiepath]}', showusercard = '{$_G[setting][showusercard]}', attackevasive = '{$_G[config][security][attackevasive]}', disallowfloat = '{$_G[setting][disallowfloat]}', creditnotice = '<!--{if $_G['setting']['creditnotice']}-->$_G['setting']['creditnames']<!--{/if}-->', defaultstyle = '$_G[style][defaultextstyle]', REPORTURL = '$_G[currenturl_encode]', SITEURL = '$_G[siteurl]', JSPATH = '$_G[setting][jspath]';</script>
+<script src="{$_G['setting']['jspath']}common.js?{VERHASH}" type="text/javascript"></script> 
+<!--{if $_G['setting']['version'] == 'X3'}--><script src="{STATICURL}js/mobile/common.js?{VERHASH}" charset="{CHARSET}"></script><!--{/if}-->
+<!--{eval require_once('./mplus/lang.php'); require_once('./source/plugin/v2_wapmm/plus.php');}-->
+<link rel="apple-touch-icon-precomposed" href="{$_G['siteurl']}/mplus/img/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$_G['siteurl']}/mplus/img/apple-touch-icon-114x114.png">

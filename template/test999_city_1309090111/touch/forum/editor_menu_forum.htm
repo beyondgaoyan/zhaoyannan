@@ -1,0 +1,255 @@
+
+<style type="text/css">.imgl p.xi2, .imgl p.mtn, .imgl p.imgf { display:none; } .imgl img { height:70px; width:70px !important; }</style>
+<script type="text/javascript">
+	function switchImagebutton(btn) {
+		switchButton(btn, 'image');
+		$(editorid + '_image_menu').style.height = '';
+		doane();
+	}
+	function switchAttachbutton(btn) {
+		switchButton(btn, 'attach');
+		doane();
+	}
+</script>
+
+<div id="{$editorid}_image_menu" unselectable="on" style="padding-top:10px;">
+    
+	<ul id="{$editorid}_image_ctrl">		
+		<!--{if $allowpostimg}-->
+			<li class="current" id="{$editorid}_btn_imgattachlist"></li>
+			<!--{if $allowuploadtoday}-->
+			<li id="{$editorid}_btn_local" did="{$editorid}_btn_imgattachlist|local"></li>
+			<!--{/if}-->
+		<!--{/if}-->
+	</ul>	
+    
+	<!--{if $allowpostimg}-->
+
+		<div unselectable="on" id="{$editorid}_imgattachlist">       
+        
+			<!--{if $allowuploadtoday}-->
+				<div style="display:none">
+					<div id="imgattach_notice" {if empty($imgattachs['used'])} style="display: none"{/if}>
+						
+					</div>
+					<span id="imgSpanButtonPlaceholder"></span>
+				</div>
+			<!--{/if}-->
+            
+			<div id="imgattachlist"></div>
+			<div id="unusedimgattachlist"></div>
+
+				<!--{if $allowuploadtoday}-->
+
+				<div id="imgUploadProgress"></div>
+
+				<script type="text/javascript">
+					var imgUpload = new SWFUpload({
+						upload_url: "{$_G[siteurl]}misc.php?mod=swfupload&action=swfupload&operation=upload&fid=$_G[fid]",
+						post_params: {"uid" : "$_G[uid]", "hash":"$swfconfig[hash]", "type":"image"},
+
+						file_size_limit : "$swfconfig[max]",
+						file_types : "$swfconfig[imageexts][ext]",
+						file_types_description : "$swfconfig[imageexts][depict]",
+						file_upload_limit : $swfconfig['limit'],
+						file_queue_limit : 0,
+						swfupload_preload_handler : preLoad,
+						swfupload_load_failed_handler : loadFailed,
+						file_dialog_start_handler : fileDialogStart,
+						file_queued_handler : fileQueued,
+						file_queue_error_handler : fileQueueError,
+						file_dialog_complete_handler : fileDialogComplete,
+						upload_start_handler : uploadStart,
+						upload_progress_handler : uploadProgress,
+						upload_error_handler : uploadError,
+						upload_success_handler : uploadSuccess,
+						upload_complete_handler : uploadComplete,
+
+						button_image_url : "{IMGDIR}/uploadbutton.png",
+						button_placeholder_id : "imgSpanButtonPlaceholder",
+						button_width: 100,
+						button_height: 25,
+						button_cursor:SWFUpload.CURSOR.HAND,
+						button_window_mode: "transparent",
+
+						custom_settings : {
+							progressTarget : "imgUploadProgress",
+							uploadSource: 'forum',
+							uploadType: 'image',
+							imgBoxObj: $('imgattachlist'),
+							<!--{if $swfconfig['maxsizeperday']}-->
+							maxSizePerDay: $swfconfig['maxsizeperday'],
+							<!--{/if}-->
+							<!--{if $swfconfig['maxattachnum']}-->
+							maxAttachNum: $swfconfig['maxattachnum'],
+							<!--{/if}-->
+							<!--{if $swfconfig['filtertype']}-->
+							filterType: $swfconfig['filtertype'],
+							<!--{/if}-->
+							singleUpload: $('{$editorid}_btn_local')
+						},
+						debug: false
+					});
+
+					
+					function selectCreateTab(flag) {
+						var vwObj = $('uploadPanel');
+						var opObj = $('createalbum');
+						var selObj = $('uploadalbum');
+						if(flag) {
+							vwObj.style.display = '';
+							opObj.style.display = 'none';
+							selObj.value = selObj.options[0].value;
+						} else {
+							vwObj.style.display = 'none';
+							opObj.style.display = '';
+						}
+					}
+				</script>
+				<!--{/if}-->            
+		</div>
+        
+        <div unselectable="on" id="{$editorid}_local_up" >
+                       
+				<table cellpadding="0" cellspacing="0" border="0" width="100%">
+					<tbody id="imgattachbodyhidden" style="display:none"><tr>
+						<td class="atnu"><span id="imglocalno[]"><img src="{STATICURL}image/filetype/common_new.gif" /></span></td>
+						<td class="atna">
+							<span id="imgdeschidden[]" style="display:none">
+								<span id="imglocalfile[]"></span>
+							</span>
+							<input type="hidden" name="imglocalid[]" />
+						</td>
+						<td class="attc"><span id="imgcpdel[]" class="pic_c"></span></td>
+					</tr></tbody>
+				</table>
+                
+			 <div class="post_mn" >
+                
+             <div class="post_pic_tl"><table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="imgattachbody"></tbody></table></div>
+                
+			<div id="imgattachbtnhidden" style="display:none;"><span><form name="imgattachform" id="imgattachform" method="post" autocomplete="off" action="misc.php?mod=swfupload&operation=upload&simple=1&type=image" target="attachframe" $enctype><input type="hidden" name="uid" value="$_G['uid']"><input type="hidden" name="hash" value="{echo md5(substr(md5($_G['config']['security']['authkey']), 8).$_G['uid'])}"><input type="file" name="Filedata" size="0" style="width:120px; height:20px; opacity:0;" /></form></span></div>       
+			<div id="imgattachbtn"></div>
+            
+            <div class="mtb post_ts">					
+				<!--{if $imgexts}--><span class="xi1">$imgexts</span><!--{/if}-->                    
+                 {lang attachment_size} <span class="xi1"><!--{if $_G['group']['maxattachsize']}-->{lang lower_than} $maxattachsize_mb <!--{else}-->{lang size_no_limit}<!--{/if}--></span>                    
+			</div> 
+            
+            </div>
+            
+			<div id="imguploadbtn" class="inbox mtb">
+			<button class="ibt ibt_ps ibtp" type="button" onclick="uploadAttach(0, 0, 'img')">{echo m_lang('upload_pic')}</button>
+            </div> 
+                       
+			<div id="imguploading" class="mtb" style="display: none;"><img src="{IMGDIR}/uploading.gif" style="vertical-align: middle;" /></div>
+            
+		</div>
+		
+	<!--{/if}-->
+</div>
+
+<!--{if $_G['group']['allowpostattach']}-->
+	<div id="{$editorid}_attach_menu" style="display:none;" unselectable="on">
+		<table width="100%" cellpadding="0" cellspacing="0" class="fwin">        
+        <tr><td>
+		<div unselectable="on" id="{$editorid}_upload" style="display: none;">
+			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+				<tbody id="attachbodyhidden" style="display:none"><tr>
+					<td class="atnu"><span id="localno[]"><img src="{STATICURL}image/filetype/common_new.gif" /></span></td>
+					<td class="atna">
+						<span id="deschidden[]" style="display:none">
+							<span id="localfile[]"></span>
+						</span>
+						<input type="hidden" name="localid[]" />
+					</td>
+					<td class="attc"><span id="cpdel[]"></span></td>
+				</tr></tbody>
+			</table>            
+			<div><table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="attachbody"></tbody></table></div>           
+			<div>
+				<div id="attachbtnhidden" style="display:none"><span><form name="attachform" id="attachform" method="post" autocomplete="off" action="misc.php?mod=swfupload&operation=upload&simple=1" target="attachframe" $enctype><input type="hidden" name="uid" value="$_G['uid']"><input type="hidden" name="hash" value="{echo md5(substr(md5($_G['config']['security']['authkey']), 8).$_G['uid'])}"><input type="file" name="Filedata" size="45" class="fldt" /></form></span></div>
+				<div id="attachbtn"></div>
+				<div id="uploadbtn">
+					<button type="button" class="pn pnc vm" onclick="uploadAttach(0, 0)"><span>{lang upload}</span></button>
+					<span class="xg1">&larr;{lang upload_after_selected}</span>
+				</div>
+				<div id="uploading" style="display: none;"><img src="{IMGDIR}/uploading.gif" style="vertical-align: middle;" /> </div>
+			</div>			
+		</div>
+		</td></tr></table>
+	</div>
+<!--{/if}-->
+
+<iframe name="attachframe" id="attachframe" style="display: none;" onload="uploadNextAttach();"></iframe>
+
+<script type="text/javascript">
+<!--{if $_G['setting']['defaulteditormode'] == 1}-->
+	if(wysiwyg) {		
+		newEditor(0, textobj.value);
+	}
+	<!--{else}-->
+	if(wysiwyg) {
+		newEditor(1, bbcode2html(textobj.value));
+	} else {
+		newEditor(0, textobj.value);
+	}
+	<!--{/if}-->
+	<!--{if $editor[simplemode] > 0}-->
+		editorsimple();
+	<!--{/if}-->
+
+	var ATTACHNUM = {'imageused':0,'imageunused':0,'attachused':0,'attachunused':0}, ATTACHUNUSEDAID = new Array(), IMGUNUSEDAID = new Array();
+	<!--{if $allowpostimg}-->
+		ATTACHNUM['imageused'] = <!--{echo @count($imgattachs['used'])}-->;
+		<!--{if !empty($imgattachs['used']) || !empty($imgattachs['unused'])}-->
+			switchImagebutton('imgattachlist');
+			$(editorid + '_image').evt = false;
+			updateattachnum('image');
+		<!--{else}-->
+			switchImagebutton('multi');
+		<!--{/if}-->
+	<!--{/if}-->
+	<!--{if $_G['group']['allowpostattach'] || $_G['group']['allowpostimage']}-->
+
+		ATTACHNUM['attachused'] = <!--{echo @count($attachs['used'])}-->;
+		<!--{if !empty($attachs['used']) || !empty($attachs['unused'])}-->
+			$(editorid + '_attach').evt = false;
+			updateattachnum('attach');
+		<!--{else}-->
+			switchAttachbutton('swfupload');
+		<!--{/if}-->
+	<!--{/if}-->
+	<!--{if !empty($attachs['unused'])}-->
+		display('attachnotice_attach');
+		var msg = '';
+		<!--{loop $attachs['unused'] $attach}-->
+			<!--{if !empty($attach['aid'])}-->
+				msg += '<p><label><input id="unused$attach[aid]" name="unused[]" value="$attach[aid]" checked type="checkbox" class="pc" /><span title="$attach[filenametitle] $attach[dateline]">$attach[filename]</span></label></p>'
+				ATTACHUNUSEDAID[{$attach[aid]}] = '$attach[aid]';
+			<!--{/if}-->
+		<!--{/loop}-->
+		$('unusedlist_attach').innerHTML = '<div class="cl">' + msg + '</div>';
+		$('unusednum_attach').innerHTML = parseInt(<!--{echo @count($attachs['unused'])}-->);
+	<!--{/if}-->
+	<!--{if !empty($imgattachs['unused'])}-->
+		display('attachnotice_img');
+		var msg = '';
+		<!--{loop $imgattachs['unused'] $attach}-->
+			<!--{if !empty($attach['aid'])}-->
+				msg += '<p style="float:left;width:220px;"><label><input id="unused$attach[aid]" name="unused[]" value="$attach[aid]" checked type="checkbox" class="pc" /><span title="$attach[filenametitle] $attach[dateline]">$attach[filename]</span></label></p>'
+				IMGUNUSEDAID[{$attach[aid]}] = '$attach[aid]';
+			<!--{/if}-->
+		<!--{/loop}-->
+		$('unusedlist_img').innerHTML = '<div class="cl">' + msg + '</div>';
+		$('unusednum_img').innerHTML = parseInt(<!--{echo @count($imgattachs['unused'])}-->);
+	<!--{/if}-->
+	setCaretAtEnd();
+	if(BROWSER.ie >= 5 || BROWSER.firefox >= '2') {
+		_attachEvent(window, 'beforeunload', unloadAutoSave);
+	}
+	<!--{if !empty($_GET['cedit']) && $_GET['cedit'] == 'yes'}-->
+		loadData(1);
+		$(editorid + '_switchercheck').checked = !wysiwyg;
+	<!--{/if}-->
+</script>

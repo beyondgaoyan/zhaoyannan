@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$config['title']}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script charset="utf-8" type="text/javascript" src="source/plugin/aljbd/style/js/jquery.js"></script>
+<script charset="utf-8" type="text/javascript" src="source/plugin/aljbd/style/js/common.js"></script>
+<script charset="utf-8" type="text/javascript" src="source/plugin/aljbd/style/js/viewgoodspic.js"></script>
+<link type="text/css" rel="stylesheet" href="source/plugin/aljbd/style/css/common.css" />
+<script type="text/javascript">var cookiepre = 'VOz_', cookiedomain = '', cookiepath = '';</script>
+</head>
+<div id="append_parent"></div>
+<div class="topnav cl">
+<div class="nav_wrap">
+<ul class="cl y">
+<li class="navlogo" {if file_exists('source/plugin/aljbd/com/nav.php')}style="border-right: 1px solid {$config['nav_color']};"{/if}><a href="./">{$_G['setting']['bbname']}</a></li>
+{if $_G['uid']}
+<li class="navname" >
+<img width="20" height="20" src="{eval echo avatar($bd['uid'],'small',true)}" alt="avatar">
+<span >{$_G['username']}</span><a  href="member.php?mod=logging&action=logout&formhash={FORMHASH}" rel="nofollow">[{lang aljbd:s116}]</a>
+</li>
+{else}
+<li class="navlogin">
+
+<a href="/member.php?mod=logging&action=login">登录</a>
+
+</li>
+
+<li><a target="_blank" href="/member.php?mod=register">注册会员</a></li>
+{/if}
+</ul>
+</div>
+</div><div id="hd">
+<div class="wrap">
+<div class="cl logo">
+<h2><a href="plugin.php?id=aljbd" title=""><img border="0" alt="乐乘网" src="source/plugin/aljbd/style/images/logo.gif"></a></h2>
+</div>
+</div>
+<div id="nv">
+<ul>
+<li {if $_GET['act']==''}class="active"{/if}><a href="plugin.php?id=aljbd" title="首页" >首页</a></li>
+<li {if $_GET['act']=='shoplist'}class="active"{/if}><a href="plugin.php?id=aljbd&act=shoplist" title="商品" >商品</a></li>
+<li {if $_GET['act']=='pulist'&&$_GET['renzheng']==''}class="active"{/if}><a href="plugin.php?id=aljbd&act=pulist" title="店铺" >店铺</a><img class="ntc" alt="hot" src="source/plugin/aljbd/style/images/hot.gif"></li>
+<li {if $_GET['act']=='quanlist'}class="active"{/if}><a href="plugin.php?id=aljbd&act=quanlist" title="消费券" >消费券</a></li>
+<li {if $_GET['act']=='shanglist'}class="active"{/if}><a href="plugin.php?id=aljbd&act=shanglist" title="商情" >商情</a></li>
+<li {if $_GET['act']=='pulist'&&$_GET['renzheng']=='1'}class="active"{/if}><a href="plugin.php?id=aljbd&act=pulist&renzheng=1">认证店铺</a><img class="ntc" alt="new" src="source/plugin/aljbd/style/images/hot.gif"></li>
+<li><a href="http://www.lochal.com/forum.php" title="社区" >社区</a></li>
+<li class="y">
+
+<div id="search_form_wrap">
+<form method="post" name="" action="plugin.php?id=aljbd" onsubmit="return brand_search(this)" id="form_search">			
+<input id="srchtxt" speech="" x-webkit-speech=""  type="text" value="" name="keyword" autocomplete="off">
+<input id="mod_sshop" class="pr" type="radio" name="mod" value="shop" checked="checked" autocomplete="off">
+<label id="for_mod_sshop" for="mod_sshop" title="搜商家">搜商家</label>
+<input id="mod_sgood" class="pr" type="radio" name="mod" value="goods" autocomplete="off">
+<label id="for_mod_sgood" for="mod_sgood" title="搜商品">搜商品</label>
+</form>
+<script type="text/javascript">
+$(function() {
+$('#for_mod_sshop').click(function(){
+$('#mod_sshop').attr("checked","checked");
+$('#mod_sgood').removeAttr("checked");
+$('#form_search').submit();
+});
+$('#for_mod_sgood').click(function(){
+$('#mod_sgood').attr("checked","checked");
+$('#mod_sshop').removeAttr("checked");
+$('#form_search').submit();
+});
+$('#myshopmenu,#navmsg').parent().hover(function(){
+$(this).addClass('h');
+$(this).find('ul').show();
+},function(){
+$(this).removeClass('h');
+$(this).find('ul').hide();
+})
+});
+</script>
+</div>
+</li>
+</ul>
+
+</div>
+</div>
+
+<script charset="utf-8" type="text/javascript" src="static/js/header.js"></script>

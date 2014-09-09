@@ -1,0 +1,72 @@
+</div>
+<!--{$adfooter}-->
+<!--{hook/global_footer_mobile}-->
+<footer>
+<div class="ftm">
+<span>{echo m_lang('touch')}</span>
+<!--{if $_G['setting']['version'] == 'X3'}--><span><a href="{$_G['setting']['mobile']['simpletypeurl'][0]}">{lang no_simplemobiletype}</a></span><!--{/if}-->
+<span><a href="{$_G['setting']['mobile']['nomobileurl']}">{lang nomobiletype}</a></span>
+<span><a href="javascript:;" onclick="window.scrollTo('0','0')">TOP</a></span>
+</div>
+<div class="ftn">&copy; {$_G['setting']['sitename']} {$_G['setting']['icp']}</div>
+</footer>
+</div>
+</div>
+<!--{if $ckstyle == 1}-->
+<!--{if $_G['uid'] || $_G['connectguest']}--><!--{else}-->
+<script type="text/javascript">
+function cookiesave(n, v, mins, dn, path) {
+    if (n) {
+
+        if (!mins) mins = 365 * 24 * 60;
+        if (!path) path = "/";
+        var date = new Date();
+
+        date.setTime(date.getTime() + (mins * 60 * 1000));
+
+        var expires = "; expires=" + date.toGMTString();
+
+        if (dn) dn = "domain=" + dn + "; ";
+        document.cookie = n + "=" + v + expires + "; " + dn + "path=" + path;
+    }
+}
+function cookieget(n) {
+    var name = n + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+function closeclick() {
+    document.getElementById('note').style.display = 'none';
+    cookiesave('closeclick', 'closeclick', '', '', '');
+}
+function clickclose() {
+    if (cookieget('closeclick') == 'closeclick') {
+        document.getElementById('note').style.display = 'none';
+    } else {
+        document.getElementById('note').style.display = 'block';
+    }
+}
+</script>
+<div id="note" class="note" style="display:none;"><div><a href="javascript:;" onclick="closeclick()" class="closerd"><img src="./mplus/img/closerd.png" height="24" /></a><!--{$userrd}--></div></div>
+<!--{/if}-->
+<!--{/if}-->
+<script type="text/javascript">
+if(window.onload!=null){   
+    window.onload=function(){<!--{if $ckstyle == 1}--><!--{if $_G['uid'] || $_G['connectguest']}--><!--{else}-->clickclose();<!--{/if}--><!--{/if}-->auto_height();setTimeout(function(){window.scrollTo(0,1)},0);};  
+}
+</script>
+<script src="./mplus/js/toggle.js" type="text/javascript"></script>
+ 
+</body>
+</html>
+<!--{eval updatesession();}-->
+<!--{if defined('IN_MOBILE')}-->
+	<!--{eval output();}-->
+<!--{else}-->
+	<!--{eval output_preview();}-->
+<!--{/if}-->
