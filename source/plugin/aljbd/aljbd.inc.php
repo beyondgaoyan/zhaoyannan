@@ -67,7 +67,7 @@ if($_GET['act']=='goods'){
 	}//debug($bdlist);
 	$paging = helper_page :: multi($num, $perpage, $currpage, 'plugin.php?id=aljbd&act=goods&type='.$_GET['type'].'&subtype='.$_GET['subtype'].'&order='.$_GET['order'].'&kw='.$_GET['kw'].'&view='.$_GET['view'], 0, 11, false, false);
 	
-	include template('aljbd:list_goods');
+	include template('aljbd:shoplist');
 }else if($_GET['act']=='attend'){
 	if(submitcheck('submit')){
 		$bd=C::t('#aljbd#aljbd')->fetch_by_uid($_G['uid']);
@@ -1548,7 +1548,7 @@ if($_GET['act']=='goods'){
 		$metakeywords =  $config['keywords'];
 		$bdlist=C::t('#aljbd#aljbd_goods')->fetch_all();
 		$bdlist=C::t('#aljbd#aljbd_goods')->fetch_all_by_status('',$start,$perpage,'',$_GET['type'],$_GET['subtype'],$_GET['region'],$_GET['subregion'],$_GET['order'],$search);
-echo"<pre>";		print_r($bdlist);exit;
+
 		if($_GET['type']){
 			$bdlist=C::t('#aljbd#aljbd_goods')->counts_by_type($_GET['type']);
 		}
