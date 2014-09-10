@@ -76,7 +76,7 @@ class table_aljbd extends discuz_table{
 			$con[]=$renzheng;
 			$where.=' and renzheng=%d ';
 		}
-		if($status){
+		if(isset($status)){
 			$con[]=$status;
 			$where.='and status=%d';
 		}

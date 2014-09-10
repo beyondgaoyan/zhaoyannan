@@ -67,7 +67,7 @@ if($_GET['act']=='goods'){
 	}//debug($bdlist);
 	$paging = helper_page :: multi($num, $perpage, $currpage, 'plugin.php?id=aljbd&act=goods&type='.$_GET['type'].'&subtype='.$_GET['subtype'].'&order='.$_GET['order'].'&kw='.$_GET['kw'].'&view='.$_GET['view'], 0, 11, false, false);
 	
-	include template('aljbd:shoplist');
+	include template('aljbd:list_goods');
 }else if($_GET['act']=='attend'){
 	if(submitcheck('submit')){
 		$bd=C::t('#aljbd#aljbd')->fetch_by_uid($_G['uid']);
@@ -1546,7 +1546,11 @@ if($_GET['act']=='goods'){
 }else if($_GET['act']=='shoplist'){
 		$navtitle = 'ÉÌÆ·';
 		$metakeywords =  $config['keywords'];
-		$bdlist=C::t('#aljbd#aljbd_goods')->fetch_all();
+		$metadescription = $config['description'];
+		
+		
+		/*
+$bdlist=C::t('#aljbd#aljbd_goods')->fetch_all();
 		$bdlist=C::t('#aljbd#aljbd_goods')->fetch_all_by_status('',$start,$perpage,'',$_GET['type'],$_GET['subtype'],$_GET['region'],$_GET['subregion'],$_GET['order'],$search);
 
 		if($_GET['type']){
@@ -1563,7 +1567,63 @@ if($_GET['act']=='goods'){
 		$tlist_n=C::t('#aljbd#aljbd_type_goods')->fetch_all_by_type($_GET['type']);
 		$tlist_name=$tlist_n[0]['subject'];
 		$num=count($bdlist);
+*/
+		$typecount=C::t('#aljbd#aljbd_goods')->count_by_type();
+	//debug($typecount);
+	foreach($typecount as $tc){
+		$tcs[$tc['type']]=$tc['num'];
+	} 
+	//debug($tcs);
+	if($_GET['type']){
+		$subtypecount=C::t('#aljbd#aljbd_goods')->count_by_type($_GET['type']);
+	}
+	$aljbd=C::t('#aljbd#aljbd')->range();
+
+	//debug($aljbd);
+	$config=$_G['cache']['plugin']['aljbd'];
+	$typelist=C::t('#aljbd#aljbd_type_goods')->range();
+	$tlist=C::t('#aljbd#aljbd_type_goods')->fetch_all_by_upid(0);
+	//$rlist=C::t('#aljbd#aljbd_region')->fetch_all_by_upid(0);
+	$currpage=$_GET['page']?$_GET['page']:1;
+	$perpage=$config['page'];
+	if(submitcheck('submit')){
 		
+		$search=$_GET['kw'];
+	
+	}
+	$num=C::t('#aljbd#aljbd_goods')->count_by_status('','',$_GET['type'],$_GET['subtype'],$_GET['region'],$_GET['subregion'],$search);
+	
+	
+	$allpage=ceil($num/$perpage);
+	$start=($currpage-1)*$perpage;
+	$recommendlist=C::t('#aljbd#aljbd')->fetch_all_by_recommend(1,0,10);
+	$recommendlist_goods=C::t('#aljbd#aljbd_goods')->fetch_all_by_recommend(1,0,10);
+	if($config['isrewrite']){
+		if($_GET['order']=='1'){
+			$_GET['order']='view';
+		}else if($_GET['order']=='2'){
+			$_GET['order']='price1';
+		}else{
+			$_GET['order']='';
+		}
+		if($_GET['view']=='3'){
+			$_GET['view']="pic";
+		}else if($_GET['view']=='4'){
+			$_GET['view']="list";
+		}else{
+			$_GET['view']='';
+		}
+	}
+	
+	$bdlist=C::t('#aljbd#aljbd_goods')->fetch_all_by_status('',$start,$perpage,'',$_GET['type'],$_GET['subtype'],$_GET['region'],$_GET['subregion'],$_GET['order'],$search);
+	//
+	$notice=C::t('#aljbd#aljbd_notice')->fetch_all_by_uid_bid('','',0,9);
+	foreach($bdlist as $k=>$v){
+		$bdlist[$k]['c']=C::t('#aljbd#aljbd_comment')->fetch_by_bid($v['id']);
+		$bdlist[$k]['q']=str_replace('{qq}',$v['qq'],$config['qq']);
+	}//debug($bdlist);
+	$paging = helper_page :: multi($num, $perpage, $currpage, 'plugin.php?id=aljbd&act=shoplist&type='.$_GET['type'].'&subtype='.$_GET['subtype'].'&order='.$_GET['order'].'&kw='.$_GET['kw'].'&view='.$_GET['view'], 0, 11, false, false);
+	
 		//debug($tlist_name);
 	include template('aljbd:shoplist');
 	

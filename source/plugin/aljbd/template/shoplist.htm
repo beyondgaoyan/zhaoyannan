@@ -119,7 +119,7 @@ $t['subject']({if $tcs[$t['id']]}$tcs[$t['id']]{else}0{/if})</a>
 <div class="thumb"><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['bid']}&gid={$bd['id']}{/if}" target="_blank"><img alt="$bd['name']" src="{if file_exists($bd['pic1'])}$bd['pic1']{else}source/plugin/aljbd/images/zz.jpg{/if}" width="100px" height="100px"></a></div>
 <div class="info">
 <h3 class="xi2"><a title="$bd['name']" href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=goodview&bid={$bd['bid']}&gid={$bd['id']}{/if}" target="_blank">$bd['name']</a></h3>
-<p class="xg1">$bd['addr'], $bd['tel']</p>
+<p class="xg1">$aljbd[$bd['bid']]['name'], $aljbd[$bd['bid']]['tel']</p>
 {if $config['isqq']}<p style="padding-top:5px;">{if $bd['qq']}QQ: $bd['q']{/if}</p>{/if}
 <p class="discount xg1"></p>
 </div>
@@ -129,7 +129,7 @@ $t['subject']({if $tcs[$t['id']]}$tcs[$t['id']]{else}0{/if})</a>
 $bd['c']['username']
 </span></a>
 <span>:</span>
-<a href="plugin.php?id=aljbd&act=view&bid={$bd['id']}#comment{$bd['c']['id']}" target="_blank"><span>{eval echo mb_substr($bd['c']['content'],0,7,$_G['charset']);}..</span></a>
+<a href="plugin.php?id=aljbd&act=view&bid={$bd['bid']}#comment{$bd['c']['id']}" target="_blank"><span>{eval echo mb_substr($bd['c']['content'],0,7,$_G['charset']);}..</span></a>
 </div>
 {/if}
 {if $config['isqq']}<p class="y"><br/><br/><a href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&bid={$bd['id']}{/if}" target="_blank"><img src="$config['dptb']"></a></p>{/if}
@@ -149,14 +149,14 @@ $bd['c']['username']
 <a title="$bd['name']" href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=goodview&bid={$bd['bid']}&gid={$bd['id']}{/if}" target="_blank" class="v">$bd['name']</a>
 </h3>
 <p class="xg1 mtn address_n_tel" >
-{eval echo mb_substr($bd['addr'],0,25,$_G['charset']);}, $bd['tel']...</p>
+$aljbd[$bd['bid']]['name'], $aljbd[$bd['bid']]['tel']</p>
 <p class="s2 xg1 cl"><span class="score z"><img title="{$bd['avg']}" alt="{$avg}" src="source/plugin/aljbd/images/{$avg}.gif"></span><span class="y">¹Ø×¢({$bd['view']})ÆÀÂÛ($avg)</span></p>
 {if $config['isqq']}<p class="s2 xg1 cl"><span class="score z">{if $bd['qq']}{$bd['q']}{/if}</span><span class="y"><a class="y" href="{if $config['isrewrite']}brand_shop_{$bd['id']}.html{else}plugin.php?id=aljbd&act=view&gid={$bd['id']}{/if}" target="_blank"><img src="$config['dptb']"></a></span></p>{/if}
 
 {if $bd['c']}
 <div class="comment cl"><a href="home.php?mod=space&uid={$bd['c']['uid']}&do=profile" target="_blank"><img width="20" height="20" src="{eval echo avatar($bd['c']['uid'],'small',true)}" alt="avatar"><span class="author">$bd['c']['username']</span></a>
 <span>:</span>
-<a href="plugin.php?id=aljbd&act=view&bid={$bd['id']}#comment{$bd['c']['id']}" target="_blank"><span>{eval echo mb_substr($bd['c']['content'],0,7,$_G['charset']);}..</span></a></div>
+<a href="plugin.php?id=aljbd&act=view&bid={$bd['bid']}#comment{$bd['c']['id']}" target="_blank"><span>{eval echo mb_substr($bd['c']['content'],0,7,$_G['charset']);}..</span></a></div>
 {/if}
 </li>
 {eval $ii++;}
@@ -164,7 +164,8 @@ $bd['c']['username']
 </ul>
 {/if}
 <div class="mtm cl">
-$paging</div>
+<div class="pages cl">
+$paging</div></div>
 </div>
 </div></div>
 <div class="side">
